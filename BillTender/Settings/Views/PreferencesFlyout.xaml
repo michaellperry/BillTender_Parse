@@ -7,8 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Width="346"
-    d:DesignHeight="830"
-    d:DesignWidth="346">
+    d:DesignHeight="412.796"
+    d:DesignWidth="346"
+    DataContext="{Binding Preferences, Source={StaticResource Locator}}">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -47,15 +48,34 @@
             HorizontalScrollMode="Disabled">
             <StackPanel
                 Margin="36">
-            	<ToggleSwitch Header="Toast Notifications" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Style="{StaticResource SettingsToggleSwitchStyle}" Margin="12"/>
-            	<StackPanel Orientation="Vertical" Margin="12">
-            		<TextBlock TextWrapping="Wrap" Text="Sharing" Foreground="Black" FontSize="14.667" Margin="6"/>
-            		<ComboBox Background="#34000000" BorderBrush="#64000000" Margin="6" Style="{StaticResource PreferencesComboBoxStyle}">
-            			<x:String>None</x:String>
-            			<x:String>Family Only</x:String>
-            			<x:String>Public</x:String>
-            		</ComboBox>
-            	</StackPanel>
+                <ToggleSwitch
+                    Header="Toast Notifications"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Foreground="Black"
+                    Style="{StaticResource SettingsToggleSwitchStyle}"
+                    Margin="12"
+                    IsOn="{Binding ToastNotifications, Mode=TwoWay}" />
+                <StackPanel
+                    Orientation="Vertical"
+                    Margin="12">
+                    <TextBlock
+                        TextWrapping="Wrap"
+                        Text="Sharing"
+                        Foreground="Black"
+                        FontSize="14.667"
+                        Margin="6" />
+                    <ComboBox
+                        Background="#34000000"
+                        BorderBrush="#64000000"
+                        Margin="6"
+                        Style="{StaticResource PreferencesComboBoxStyle}"
+                        SelectedIndex="{Binding Sharing, Mode=TwoWay}">
+                        <x:String>None</x:String>
+                        <x:String>Family Only</x:String>
+                        <x:String>Public</x:String>
+                    </ComboBox>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
 

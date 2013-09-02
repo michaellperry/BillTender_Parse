@@ -1,4 +1,6 @@
 ﻿using BillTender.Settings.Views;
+using BillTender.ViewModels;
+using UpdateControls.XAML;
 using Windows.UI.ApplicationSettings;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -29,6 +31,10 @@ namespace BillTender
 
         void MainPage_CommandsRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
         {
+            var viewModel = ForView.Unwrap<MainViewModel>(DataContext);
+            if (viewModel == null)
+                return;
+
             var account = new SettingsCommandHandler<AccountFlyout>(
                 this,
                 "AccountSettings",
@@ -41,7 +47,8 @@ namespace BillTender
                 f => f.Back);
 
             args.Request.ApplicationCommands.Add(account.SettingsCommand);
-            args.Request.ApplicationCommands.Add(preferences.SettingsCommand);
+            if (viewModel.CanSetPreferences)
+                args.Request.ApplicationCommands.Add(preferences.SettingsCommand);
         }
 
     }

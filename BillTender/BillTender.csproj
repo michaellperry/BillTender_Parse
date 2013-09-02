@@ -114,9 +114,11 @@
     <Compile Include="ParseConfig_Keys.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\Models\AccountModel.cs" />
+    <Compile Include="Settings\Models\SharingLevel.cs" />
     <Compile Include="Settings\ViewModels\AccountViewModel.cs" />
     <Compile Include="Settings\ViewModels\CurrentUserViewModel.cs" />
     <Compile Include="Settings\ViewModels\LogInViewModel.cs" />
+    <Compile Include="Settings\ViewModels\PreferencesViewModel.cs" />
     <Compile Include="Settings\ViewModels\SignUpViewModel.cs" />
     <Compile Include="Settings\Views\CurrentUserControl.xaml.cs">
       <DependentUpon>CurrentUserControl.xaml</DependentUpon>
@@ -135,6 +137,7 @@
       <DependentUpon>SignUpControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\VisibleWhenTrueConverter.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
