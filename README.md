@@ -12,42 +12,48 @@ keys into the file.
 
 ## Project structure
 
-This project uses Update Controls as the MVVM framework. The foundation of the application is the Model layer.
+This project uses Update Controls as the MVVM framework. It is divided into bounded contexts.
 
-### Models
+### Setings
 
-The LoginModel keeps track of the currently logged in user. Parse represents the user with the ParseUser class.
-It returns the currently logged in user from a static method. The LoginModel simply encapsulates this method
-and provides an Independent tracking proxy. When a user signs up, logs in, or logs out, the LoginModel calls
+The Settings folder contains the views, view models, and models for application settings. Other folders
+will subdivide the application into other bounded contexts. The foundation of the settings bounded context
+is the model layer.
+
+#### Models
+
+The AccountModel keeps track of the currently logged in user. Parse represents the user with the ParseUser class.
+It returns the currently logged in user from a static method. The AccountModel simply encapsulates this method
+and provides an Independent tracking proxy. When a user signs up, logs in, or logs out, the AccountModel calls
 OnSet on this tracking proxy to indicate that a change has occurred.
 
-The LoginModel also keeps track of whether the user is signing up or logging in, so that the correct UI can
+The AccountModel also keeps track of whether the user is signing up or logging in, so that the correct UI can
 be displayed. Finally, it keeps track of whether the sign up or login process is busy, and what exception
 was last thrown from either of these processes.
 
-### ViewModels
+#### ViewModels
 
-The ViewModelLocator returns an instance of the main, sign up, log in, and account view models. Each of these
-view models controls a different section of the UI. All view models share a single instance of the LoginModel,
+The ViewModelLocator returns an instance of the current user, sign up, log in, and account view models. Each of these
+view models controls a different section of the UI. All view models share a single instance of the AccountModel,
 providing a consistent experience across the views.
 
-The MainViewModel selects the visual state based on the login status of the user. If a user is logged in, then
+The AccountViewModel selects the visible controls based on the login status of the user. If a user is logged in, then
 it selects the LoggedIn state. If not, it selects either LoggingIn or SigningUp, depending upon the flag in
-the LoginModel.
+the AccountModel.
 
 The LogInViewModel controls the log in view. If the user presses the "Create Account" button, it clears the
-ExistingAccount flag in the LoginModel, so that the signup view will be displayed instead.
+ExistingAccount flag in the AccountModel, so that the signup view will be displayed instead.
 
 The SignUpViewModel controls the sign up view. If the user presses the "Existing Account" button, it sets the
 ExistingAccount flag.
 
-The AccountViewModel returns information about the currently logged in user. It also responds to the LogOut
-button by calling the Parse LogOut method, and notifying the LoginModel of the change.
+The CurrentUserViewModel returns information about the currently logged in user. It also responds to the LogOut
+button by calling the Parse LogOut method, and notifying the AccountModel of the change.
 
 None of the view models have properties for the user name or password. Security best practices require
 that the password not be data bound or sent to the view model.
 
-### Views
+#### Views
 
 The LogInControl is a user control that binds to the LogInViewModel. It provides the log in UI. The user
 name and password are stored only in the controls, and not data bound to the view model. The view is
@@ -56,13 +62,11 @@ responsible for calling the Parse LogIn method and passing in these values.
 The SignUpControl is a user control that binds to the SignUpViewModel. It provides the sign up UI. This
 view is responsible for calling the Parse SignUp method and passing in the user name and password.
 
-The AccountControl is a user control that binds to the AccountViewModel. It appers as a text button showing
-the user name, and opens a popup with the log out button when the user clicks on it.
+The CurrentUserContorl is a user control that binds to the CurrentUserViewModel. It appears as a text button showing
+the user name, and provides the log out button.
 
-### MainPage.xaml
-
-The MainPage aggregates all of the views. It binds to the MainViewModel to control the visual state manager,
-thus selecting which controls are visible.
+The AccountFlyout aggregates all of the views. It binds to the AccountViewModel to control the visibility
+of the views contained therein.
 
 ## Next Steps
 
