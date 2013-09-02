@@ -1,54 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BillTender.Models;
+﻿using BillTender.Settings.Models;
+using BillTender.Settings.ViewModels;
 using UpdateControls.XAML;
 
 namespace BillTender.ViewModels
 {
     public class ViewModelLocator : ViewModelLocatorBase
     {
-        private readonly LoginModel _loginModel;
+        private readonly AccountModel _accountModel;
 
         public ViewModelLocator()
         {
-            _loginModel = new LoginModel();
+            _accountModel = new AccountModel();
         }
 
-        public object Main
+        public object CurrentUser
         {
-            get { return ViewModel(() => new MainViewModel(_loginModel)); }
-        }
-
-        public object LogIn
-        {
-            get { return ViewModel(() => new LogInViewModel(_loginModel)); }
-        }
-
-        public object SignUp
-        {
-            get { return ViewModel(() => new SignUpViewModel(_loginModel)); }
+            get { return ViewModel(() => new CurrentUserViewModel(_accountModel)); }
         }
 
         public object Account
         {
-            get { return ViewModel(() => new AccountViewModel(_loginModel)); }
+            get { return ViewModel(() => new AccountViewModel(_accountModel)); }
         }
 
-        public object Settings
+        public object LogIn
         {
-            get
-            {
-                return ViewModel(() =>
-                {
-                    if (_loginModel.CurrentUser == null)
-                        return null;
+            get { return ViewModel(() => new LogInViewModel(_accountModel)); }
+        }
 
-                    return new SettingsViewModel(_loginModel.CurrentUser);
-                });
-            }
+        public object SignUp
+        {
+            get { return ViewModel(() => new SignUpViewModel(_accountModel)); }
         }
     }
 }

@@ -1,0 +1,70 @@
+﻿<UserControl
+    x:Class="BillTender.Settings.Views.SignUpControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BillTender.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="429.58"
+    d:DesignWidth="250"
+    DataContext="{Binding SignUp, Source={StaticResource Locator}}">
+
+    <StackPanel
+		Orientation="Vertical">
+		<TextBlock
+			Text="Sign Up"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Center"
+			Style="{StaticResource GroupHeaderTextStyle}"
+			Margin="6,6,6,18" Foreground="Black" />
+		<TextBlock
+			TextWrapping="Wrap"
+			Text="User Name:"
+			Margin="6,6,6,0"
+			FontSize="18.667" Foreground="#CC000000" />
+		<TextBox
+			x:Name="UserNameTextBox"
+			Margin="6,0,6,6" Background="#34000000" BorderBrush="#64000000" />
+		<TextBlock
+			TextWrapping="Wrap"
+			Text="Email:"
+			Margin="6,6,6,0"
+			FontSize="18.667" Foreground="#CC000000" />
+		<TextBox
+			x:Name="EmailTextBox"
+			Margin="6,0,6,6" Background="#34000000" BorderBrush="#64000000" />
+		<TextBlock
+			TextWrapping="Wrap"
+			Text="Password:"
+			Margin="6,6,6,0"
+			FontSize="18.667" Foreground="#CC000000" />
+		<PasswordBox
+			x:Name="PasswordTextBox"
+			Margin="6,0,6,6" Background="#34000000" BorderBrush="#64000000" />
+		<TextBlock
+			TextWrapping="Wrap"
+			Text="Confirm Password:"
+			Margin="6,6,6,0"
+			FontSize="18.667" Foreground="#CC000000" />
+		<PasswordBox
+			x:Name="ConfirmPasswordTextBox"
+			Margin="6,0,6,6" Background="#34000000" BorderBrush="#64000000" />
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Button
+				Content="Sign Up"
+				HorizontalAlignment="Left"
+				Margin="6"
+				Click="OK_Click" BorderBrush="Black" Foreground="Black" Style="{StaticResource SettingsButtonStyle}" />
+			<Button
+				Content="Existing Account"
+				HorizontalAlignment="Right"
+				Margin="6"
+				Style="{StaticResource TextSecondaryButtonStyle}"
+				Command="{Binding ExistingAccount}" Foreground="#99000000" />
+		</Grid>
+	</StackPanel>
+</UserControl>

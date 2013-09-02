@@ -5,7 +5,7 @@ using WinRtBehaviors;
 
 namespace BillTender.Behaviors
 {
-    public class BindVisualStateBehavior : Behavior<Page>
+    public class BindVisualStateBehavior : Behavior<Control>
     {
         public static DependencyProperty StateNameProperty = DependencyProperty.Register(
             "StateName",

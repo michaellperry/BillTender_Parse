@@ -1,24 +1,24 @@
 ﻿using System.Windows.Input;
+using BillTender.Settings.Models;
 using Parse;
-using BillTender.Models;
 using UpdateControls.XAML;
 
-namespace BillTender.ViewModels
+namespace BillTender.Settings.ViewModels
 {
-    public class AccountViewModel
+    public class CurrentUserViewModel
     {
-        private readonly LoginModel _loginModel;
-
-        public AccountViewModel(LoginModel loginModel)
+        private readonly AccountModel _accountModel;
+        
+        public CurrentUserViewModel(AccountModel accountModel)
         {
-            _loginModel = loginModel;
+            _accountModel = accountModel;
         }
 
         public string UserName
         {
             get
             {
-                ParseUser currentUser = _loginModel.CurrentUser;
+                ParseUser currentUser = _accountModel.CurrentUser;
                 if (currentUser == null)
                     return string.Empty;
                 return currentUser.Username;
@@ -30,11 +30,11 @@ namespace BillTender.ViewModels
             get
             {
                 return MakeCommand
-                    .When(() => _loginModel.CurrentUser != null)
+                    .When(() => _accountModel.CurrentUser != null)
                     .Do(delegate
                     {
                         ParseUser.LogOut();
-                        _loginModel.CurrentUserChanged();
+                        _accountModel.CurrentUserChanged();
                     });
             }
         }

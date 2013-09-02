@@ -2,9 +2,9 @@
 using UpdateControls;
 using UpdateControls.Fields;
 
-namespace BillTender.Models
+namespace BillTender.Settings.Models
 {
-    public class LoginModel
+    public class AccountModel
     {
         private Independent _currentUser = new Independent();
         private Independent<bool> _isExistingUser = new Independent<bool>(false);

@@ -1,0 +1,52 @@
+﻿<UserControl
+    x:Class="BillTender.Settings.Views.LogInControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BillTender.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="306.268"
+    d:DesignWidth="250"
+    DataContext="{Binding LogIn, Source={StaticResource Locator}}">
+
+    <StackPanel
+		VerticalAlignment="Top"
+		Orientation="Vertical">
+		<TextBlock
+			Text="Log In"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Center"
+			Style="{StaticResource GroupHeaderTextStyle}"
+			Margin="6,6,6,18" Foreground="Black" />
+		<TextBlock
+			TextWrapping="Wrap"
+			Text="User Name:"
+			Margin="6,6,6,0"
+			FontSize="18.667" Foreground="#CA000000" />
+		<TextBox
+			x:Name="UserNameTextBox"
+			Margin="6,0,6,6" Background="#33000000" BorderBrush="#66000000" />
+		<TextBlock
+			TextWrapping="Wrap"
+			Text="Password:"
+			Margin="6,6,6,0"
+			FontSize="18.667" Foreground="#CA000000" />
+		<PasswordBox
+			x:Name="PasswordTextBox"
+			Margin="6,0,6,6" Background="#33000000" BorderBrush="#66000000" />
+		<Grid>
+			<Button
+				Content="Log In"
+				HorizontalAlignment="Left"
+				Click="OK_Click"
+				Margin="6" Foreground="Black" BorderBrush="Black" Style="{StaticResource SettingsButtonStyle}" />
+			<Button
+				Content="Create Account"
+				HorizontalAlignment="Right"
+				Margin="6"
+				Style="{StaticResource TextSecondaryButtonStyle}"
+				Command="{Binding CreateAccount}" Foreground="#99000000" />
+		</Grid>
+	</StackPanel>
+</UserControl>
