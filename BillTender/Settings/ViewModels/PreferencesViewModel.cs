@@ -24,7 +24,9 @@ namespace BillTender.Settings.ViewModels
             {
                 _toastNotifications.OnGet();
                 bool value;
-                if (_user.TryGetValue<bool>("ToastNotifications", out value))
+                if (_user.TryGetValue<bool>(
+                    "ToastNotifications",
+                    out value))
                     return value;
                 return false;
             }
@@ -42,8 +44,9 @@ namespace BillTender.Settings.ViewModels
             {
                 _sharing.OnGet();
                 int value;
-                if (_user.TryGetValue<int>("Sharing", out value) &&
-                    IsValidSharingLevel(value))
+                if (_user.TryGetValue<int>(
+                    "Sharing",
+                    out value))
                     return value;
                 return (int)SharingLevel.None;
             }

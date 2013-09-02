@@ -1,11 +1,9 @@
 ﻿using System;
-using Parse;
 using BillTender.Settings.ViewModels;
+using Parse;
 using UpdateControls.XAML;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-
-// The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace BillTender.Settings.Views
 {
@@ -16,9 +14,10 @@ namespace BillTender.Settings.Views
             this.InitializeComponent();
         }
 
-        private async void OK_Click(object sender, RoutedEventArgs e)
+        private async void LogIn_Click(object sender, RoutedEventArgs e)
         {
-            var viewModel = ForView.Unwrap<LogInViewModel>(DataContext);
+            var viewModel = ForView.Unwrap<LogInViewModel>(
+                DataContext);
             if (viewModel == null)
                 return;
 
@@ -27,7 +26,9 @@ namespace BillTender.Settings.Views
                 viewModel.LastError = string.Empty;
                 viewModel.Busy = true;
 
-                await ParseUser.LogInAsync(UserNameTextBox.Text, PasswordTextBox.Password);
+                await ParseUser.LogInAsync(
+                    UserNameTextBox.Text,
+                    PasswordTextBox.Password);
 
                 UserNameTextBox.Text = string.Empty;
                 PasswordTextBox.Password = string.Empty;

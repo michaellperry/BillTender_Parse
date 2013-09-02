@@ -198,14 +198,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\winrt45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Parse">
-      <HintPath>..\packages\Parse.1.2.6\lib\netcore45\Parse.dll</HintPath>
+      <HintPath>..\packages\Parse.1.2.7\lib\netcore45\Parse.dll</HintPath>
     </Reference>
     <Reference Include="Parse.WinRT">
-      <HintPath>..\packages\Parse.1.2.6\lib\netcore45\Parse.WinRT.dll</HintPath>
+      <HintPath>..\packages\Parse.1.2.7\lib\netcore45\Parse.WinRT.dll</HintPath>
     </Reference>
     <Reference Include="UpdateControls, Version=2.2.2.1, Culture=neutral, PublicKeyToken=19e83a8289e31a8f, processorArchitecture=MSIL">
       <HintPath>..\packages\UpdateControls.2.2.5.0\lib\windows8\UpdateControls.dll</HintPath>

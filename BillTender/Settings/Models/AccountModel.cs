@@ -1,6 +1,7 @@
-﻿using Parse;
-using UpdateControls;
+﻿using UpdateControls;
 using UpdateControls.Fields;
+using System;
+using Parse;
 
 namespace BillTender.Settings.Models
 {
@@ -11,18 +12,19 @@ namespace BillTender.Settings.Models
         private Independent<bool> _busy = new Independent<bool>(false);
         private Independent<string> _lastError = new Independent<string>(string.Empty);
 
+        public void CurrentUserChanged()
+        {
+            _currentUser.OnSet();
+        }
+
         public ParseUser CurrentUser
         {
             get
             {
                 _currentUser.OnGet();
+
                 return ParseUser.CurrentUser;
             }
-        }
-
-        public void CurrentUserChanged()
-        {
-            _currentUser.OnSet();
         }
 
         public bool IsExistingUser

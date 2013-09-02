@@ -39,7 +39,7 @@
 			<Button
 				Content="Log In"
 				HorizontalAlignment="Left"
-				Click="OK_Click"
+				Click="LogIn_Click"
 				Margin="6" Foreground="Black" BorderBrush="Black" Style="{StaticResource SettingsButtonStyle}" />
 			<Button
 				Content="Create Account"

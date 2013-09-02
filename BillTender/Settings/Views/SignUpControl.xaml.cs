@@ -5,8 +5,6 @@ using UpdateControls.XAML;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-// The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
-
 namespace BillTender.Settings.Views
 {
     public sealed partial class SignUpControl : UserControl
@@ -16,15 +14,18 @@ namespace BillTender.Settings.Views
             this.InitializeComponent();
         }
 
-        private async void OK_Click(object sender, RoutedEventArgs e)
+        private async void SignUp_Click(object sender, RoutedEventArgs e)
         {
-            var viewModel = ForView.Unwrap<SignUpViewModel>(DataContext);
+            var viewModel = ForView.Unwrap<SignUpViewModel>(
+                DataContext);
             if (viewModel == null)
                 return;
 
-            if (PasswordTextBox.Password != ConfirmPasswordTextBox.Password)
+            if (PasswordTextBox.Password !=
+                ConfirmPasswordTextBox.Password)
             {
-                viewModel.LastError = "The passwords do not match";
+                viewModel.LastError =
+                    "The passwords do not match";
                 return;
             }
 
@@ -39,7 +40,6 @@ namespace BillTender.Settings.Views
                     Email = EmailTextBox.Text,
                     Password = PasswordTextBox.Password
                 };
-
                 await user.SignUpAsync();
 
                 UserNameTextBox.Text = string.Empty;

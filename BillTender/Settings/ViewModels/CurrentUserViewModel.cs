@@ -18,10 +18,10 @@ namespace BillTender.Settings.ViewModels
         {
             get
             {
-                ParseUser currentUser = _accountModel.CurrentUser;
-                if (currentUser == null)
-                    return string.Empty;
-                return currentUser.Username;
+                if (_accountModel.CurrentUser != null)
+                    return _accountModel.CurrentUser
+                        .Username;
+                return string.Empty;
             }
         }
 
@@ -30,7 +30,6 @@ namespace BillTender.Settings.ViewModels
             get
             {
                 return MakeCommand
-                    .When(() => _accountModel.CurrentUser != null)
                     .Do(delegate
                     {
                         ParseUser.LogOut();

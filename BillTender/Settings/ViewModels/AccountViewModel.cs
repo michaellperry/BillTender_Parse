@@ -1,6 +1,5 @@
 ﻿using System.Windows.Input;
 using BillTender.Settings.Models;
-using Parse;
 using UpdateControls.XAML;
 
 namespace BillTender.Settings.ViewModels
@@ -39,8 +38,7 @@ namespace BillTender.Settings.ViewModels
                     return AccountState.LoggedIn;
                 if (_accountModel.IsExistingUser)
                     return AccountState.LoggingIn;
-                else
-                    return AccountState.SigningUp;
+                return AccountState.SigningUp;
             }
         }
 

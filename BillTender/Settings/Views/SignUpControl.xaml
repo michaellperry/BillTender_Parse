@@ -58,7 +58,7 @@
 				Content="Sign Up"
 				HorizontalAlignment="Left"
 				Margin="6"
-				Click="OK_Click" BorderBrush="Black" Foreground="Black" Style="{StaticResource SettingsButtonStyle}" />
+				Click="SignUp_Click" BorderBrush="Black" Foreground="Black" Style="{StaticResource SettingsButtonStyle}" />
 			<Button
 				Content="Existing Account"
 				HorizontalAlignment="Right"
