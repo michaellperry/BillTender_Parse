@@ -36,5 +36,19 @@ namespace BillTender.ViewModels
         {
             get { return ViewModel(() => new AccountViewModel(_loginModel)); }
         }
+
+        public object Settings
+        {
+            get
+            {
+                return ViewModel(() =>
+                {
+                    if (_loginModel.CurrentUser == null)
+                        return null;
+
+                    return new SettingsViewModel(_loginModel.CurrentUser);
+                });
+            }
+        }
     }
 }

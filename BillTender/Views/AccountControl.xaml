@@ -187,17 +187,19 @@
             x:Name="AccountPopup"
             HorizontalAlignment="Left"
             IsLightDismissEnabled="True">
-            <StackPanel
-                Background="#FF082705"
-                Margin="6">
-                <Button
-                    Content="Log Out"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Top"
-                    Margin="6"
-                    Command="{Binding LogOut}"
-                    Click="LogOut_Click" />
-            </StackPanel>
+            <Grid Background="#FF082705">
+        		<StackPanel
+        			Margin="6">
+        			<Button Content="Settings" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6" Command="{Binding Settings}"/>
+        			<Button
+        				Content="Log Out"
+        				HorizontalAlignment="Stretch"
+        				VerticalAlignment="Top"
+        				Margin="6"
+        				Command="{Binding LogOut}"
+        				Click="LogOut_Click" />
+        		</StackPanel>
+        	</Grid>
         </Popup>
 
     </StackPanel>
