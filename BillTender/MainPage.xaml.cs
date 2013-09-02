@@ -34,8 +34,14 @@ namespace BillTender
                 "AccountSettings",
                 "Account",
                 f => f.Back);
+            var preferences = new SettingsCommandHandler<PreferencesFlyout>(
+                this,
+                "PreferencesSettings",
+                "Preferences",
+                f => f.Back);
 
             args.Request.ApplicationCommands.Add(account.SettingsCommand);
+            args.Request.ApplicationCommands.Add(preferences.SettingsCommand);
         }
 
     }
