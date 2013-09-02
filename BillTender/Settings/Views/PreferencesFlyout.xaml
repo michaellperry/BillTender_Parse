@@ -50,7 +50,7 @@
             	<ToggleSwitch Header="Toast Notifications" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Style="{StaticResource SettingsToggleSwitchStyle}" Margin="12"/>
             	<StackPanel Orientation="Vertical" Margin="12">
             		<TextBlock TextWrapping="Wrap" Text="Sharing" Foreground="Black" FontSize="14.667" Margin="6"/>
-            		<ComboBox Background="#34000000" BorderBrush="#64000000" Margin="6">
+            		<ComboBox Background="#34000000" BorderBrush="#64000000" Margin="6" Style="{StaticResource PreferencesComboBoxStyle}">
             			<x:String>None</x:String>
             			<x:String>Family Only</x:String>
             			<x:String>Public</x:String>
