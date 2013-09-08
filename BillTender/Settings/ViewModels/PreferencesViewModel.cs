@@ -3,6 +3,7 @@ using System.Linq;
 using BillTender.Settings.Models;
 using Parse;
 using UpdateControls;
+using UpdateControls.Fields;
 
 namespace BillTender.Settings.ViewModels
 {
@@ -12,10 +13,22 @@ namespace BillTender.Settings.ViewModels
 
         private Independent _toastNotifications = new Independent();
         private Independent _sharing = new Independent();
+        private Independent<string> _lastError = new Independent<string>();
+        private Independent<bool> _busy = new Independent<bool>();
 
         public PreferencesViewModel(ParseUser user)
         {
             _user = user;
+        }
+
+        public string LastError
+        {
+            get { return _lastError; }
+        }
+
+        public bool Busy
+        {
+            get { return _busy; }
         }
 
         public bool ToastNotifications
@@ -34,7 +47,7 @@ namespace BillTender.Settings.ViewModels
             {
                 _toastNotifications.OnSet();
                 _user["ToastNotifications"] = value;
-                _user.SaveAsync();
+                SaveChanges();
             }
         }
 
@@ -56,7 +69,7 @@ namespace BillTender.Settings.ViewModels
                 if (IsValidSharingLevel(value))
                 {
                     _user["Sharing"] = value;
-                    _user.SaveAsync();
+                    SaveChanges();
                 }
             }
         }
@@ -68,6 +81,24 @@ namespace BillTender.Settings.ViewModels
                 .OfType<SharingLevel>()
                 .Select(v => (int)v)
                 .Contains(value);
+        }
+
+        private async void SaveChanges()
+        {
+            try
+            {
+                _busy.Value = true;
+                _lastError.Value = string.Empty;
+                await _user.SaveAsync();
+            }
+            catch (Exception x)
+            {
+                _lastError.Value = x.Message;
+            }
+            finally
+            {
+                _busy.Value = false;
+            }
         }
     }
 }

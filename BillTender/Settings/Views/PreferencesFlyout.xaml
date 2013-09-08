@@ -76,6 +76,21 @@
                         <x:String>Public</x:String>
                     </ComboBox>
                 </StackPanel>
+                <Grid
+                    Margin="12">
+                    <ProgressRing
+                        IsActive="{Binding Busy}"
+                        Width="32"
+                        Height="32"
+                        Margin="6"
+                        HorizontalAlignment="Left" />
+                    <TextBlock
+                        TextWrapping="Wrap"
+                        Text="{Binding LastError}"
+                        Margin="6"
+                        Foreground="#FF490000"
+                        FontSize="18.667" />
+                </Grid>
             </StackPanel>
         </ScrollViewer>
 
