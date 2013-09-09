@@ -107,8 +107,14 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Behaviors\BindVisualStateBehavior.cs" />
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <Compile Include="Budget\Models\Bill.cs" />
+    <Compile Include="Budget\Models\Frequency.cs" />
+    <Compile Include="Budget\ViewModels\BudgetViewModel.cs" />
+    <Compile Include="Budget\Views\BillControl.xaml.cs">
+      <DependentUpon>BillControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Budget\Views\BudgetPage.xaml.cs">
+      <DependentUpon>BudgetPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ParseConfig.cs" />
     <Compile Include="ParseConfig_Keys.cs" />
@@ -119,6 +125,7 @@
     <Compile Include="Settings\ViewModels\CurrentUserViewModel.cs" />
     <Compile Include="Settings\ViewModels\LogInViewModel.cs" />
     <Compile Include="Settings\ViewModels\PreferencesViewModel.cs" />
+    <Compile Include="ViewModels\ProgressViewModel.cs" />
     <Compile Include="Settings\ViewModels\SignUpViewModel.cs" />
     <Compile Include="Settings\Views\CurrentUserControl.xaml.cs">
       <DependentUpon>CurrentUserControl.xaml</DependentUpon>
@@ -137,7 +144,6 @@
       <DependentUpon>SignUpControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\VisibleWhenTrueConverter.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +164,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Budget\Views\BillControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Budget\Views\BudgetPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Common\CommonValueConverters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -169,10 +183,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Common\StandardStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

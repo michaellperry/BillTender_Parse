@@ -13,15 +13,13 @@ namespace BillTender.Settings.Views
     public class SettingsCommandHandler<TSettingsFlyout>
         where TSettingsFlyout : FrameworkElement, new()
     {
-        private readonly Page _page;
         private readonly Func<TSettingsFlyout, ButtonBase> _backButton;
         private readonly SettingsCommand _settingsCommand;
 
         private Popup _settingsPopup;
 
-        public SettingsCommandHandler(Page page, string settingsCommandId, string label, Func<TSettingsFlyout, ButtonBase> backButton)
+        public SettingsCommandHandler(string settingsCommandId, string label, Func<TSettingsFlyout, ButtonBase> backButton)
         {
-            _page = page;
             _backButton = backButton;
 
             _settingsCommand = new SettingsCommand(settingsCommandId, label, DisplayAccountSettings);
@@ -34,8 +32,12 @@ namespace BillTender.Settings.Views
 
         private void DisplayAccountSettings(IUICommand command)
         {
+            Frame frame = Window.Current.Content as Frame;
+            double actualHeight = frame.ActualHeight;
+            double actualWidth = frame.ActualWidth;
+
             var settingsFlyout = new TSettingsFlyout();
-            settingsFlyout.Height = _page.ActualHeight;
+            settingsFlyout.Height = actualHeight;
             _backButton(settingsFlyout).Click += SettingsFlyout_BackClick;
 
             _settingsPopup = new Popup();
@@ -47,10 +49,10 @@ namespace BillTender.Settings.Views
 
             _settingsPopup.SetValue(Canvas.LeftProperty,
                 SettingsPane.Edge == SettingsEdgeLocation.Right
-                    ? (_page.ActualWidth - settingsFlyout.Width)
+                    ? (actualWidth - settingsFlyout.Width)
                     : 0);
             _settingsPopup.SetValue(Canvas.TopProperty, 0);
-            _settingsPopup.Height = _page.ActualHeight;
+            _settingsPopup.Height = actualHeight;
             _settingsPopup.Width = settingsFlyout.Width;
 
             _settingsPopup.ChildTransitions = new TransitionCollection();

@@ -413,6 +413,21 @@
         An AppBarButton Style is provided for each of the glyphs in the Segoe UI Symbol font.  
         Uncomment any style you reference (as not all may be required).
     -->
+    
+    <Style
+        x:Key="AddBillAppBarButtonStyle"
+        TargetType="ButtonBase"
+        BasedOn="{StaticResource AppBarButtonStyle}">
+        <Setter
+            Property="AutomationProperties.AutomationId"
+            Value="AddBillAppBarButton" />
+        <Setter
+            Property="AutomationProperties.Name"
+            Value="Add Bill" />
+        <Setter
+            Property="Content"
+            Value="&#xE109;" />
+    </Style>
 
     <!--
     

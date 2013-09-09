@@ -14,11 +14,6 @@ namespace BillTender.ViewModels
             _accountModel = new AccountModel();
         }
 
-        public object Main
-        {
-            get { return ViewModel(() => new MainViewModel(_accountModel)); }
-        }
-
         public object CurrentUser
         {
             get { return ViewModel(() => new CurrentUserViewModel(_accountModel)); }
@@ -39,6 +34,11 @@ namespace BillTender.ViewModels
             get { return ViewModel(() => new SignUpViewModel(_accountModel)); }
         }
 
+        public bool CanSetPreferences
+        {
+            get { return _accountModel.CurrentUser != null; }
+        }
+
         public object Preferences
         {
             get
@@ -49,6 +49,20 @@ namespace BillTender.ViewModels
                         return null;
 
                     return new PreferencesViewModel(_accountModel.CurrentUser);
+                });
+            }
+        }
+
+        public object Budget
+        {
+            get
+            {
+                return ViewModel(delegate
+                {
+                    if (_accountModel.CurrentUser == null)
+                        return null;
+
+                    return new BillTender.Budget.ViewModels.BudgetViewModel(_accountModel.CurrentUser);
                 });
             }
         }
