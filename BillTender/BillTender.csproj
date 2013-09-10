@@ -110,8 +110,12 @@
     <Compile Include="Budget\Models\Bill.cs" />
     <Compile Include="Budget\Models\Frequency.cs" />
     <Compile Include="Budget\ViewModels\BudgetViewModel.cs" />
+    <Compile Include="Budget\ViewModels\BillEditedEventArgs.cs" />
     <Compile Include="Budget\Views\BillControl.xaml.cs">
       <DependentUpon>BillControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Budget\Views\BillDetailView.xaml.cs">
+      <DependentUpon>BillDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Budget\Views\BudgetPage.xaml.cs">
       <DependentUpon>BudgetPage.xaml</DependentUpon>
@@ -165,6 +169,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Budget\Views\BillControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Budget\Views\BillDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

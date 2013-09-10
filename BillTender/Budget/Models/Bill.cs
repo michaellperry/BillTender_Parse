@@ -41,7 +41,7 @@ namespace BillTender.Budget.Models
             set { SetProperty<DateTime>(value); }
         }
 
-        private static bool IsValidFrequency(int value)
+        public static bool IsValidFrequency(int value)
         {
             return Enum
                 .GetValues(typeof(Frequency))

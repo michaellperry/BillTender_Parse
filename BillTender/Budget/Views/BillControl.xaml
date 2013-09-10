@@ -10,8 +10,20 @@
     d:DesignWidth="400">
     
     <Grid Margin="5">
+    	<Grid.ColumnDefinitions>
+    		<ColumnDefinition Width="98"/>
+    		<ColumnDefinition Width="123"/>
+    		<ColumnDefinition/>
+    	</Grid.ColumnDefinitions>
+    	<Grid.RowDefinitions>
+    		<RowDefinition Height="Auto"/>
+    		<RowDefinition Height="Auto"/>
+    	</Grid.RowDefinitions>
         <TextBlock
             FontSize="24"
-            Text="I&apos;m just a bill" Margin="5" />
+            Text="{Binding Payee}" Margin="5" Grid.ColumnSpan="3" />
+        <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding Amount}" Margin="5" FontSize="16"/>
+        <TextBlock Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Frequency}" Margin="5" FontSize="16"/>
+        <TextBlock Grid.Column="2" Grid.Row="1" TextWrapping="Wrap" Text="{Binding NextDue}" Margin="5" FontSize="16"/>
     </Grid>
 </UserControl>

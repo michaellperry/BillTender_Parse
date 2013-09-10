@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BillTender.Budget.ViewModels;
+using UpdateControls.XAML;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -16,9 +18,6 @@ using Windows.UI.Xaml.Navigation;
 
 namespace BillTender.Budget.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class BudgetPage : Page
     {
         public BudgetPage()
@@ -26,13 +25,51 @@ namespace BillTender.Budget.Views
             this.InitializeComponent();
         }
 
-        /// <summary>
-        /// Invoked when this page is about to be displayed in a Frame.
-        /// </summary>
-        /// <param name="e">Event data that describes how this page was reached.  The Parameter
-        /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            var viewModel = ForView.Unwrap<BudgetViewModel>(DataContext);
+            if (viewModel != null)
+            {
+                viewModel.BillEdited += BillEdited;
+            }
+
+            base.OnNavigatedTo(e);
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            var viewModel = ForView.Unwrap<BudgetViewModel>(DataContext);
+            if (viewModel != null)
+            {
+                viewModel.BillEdited -= BillEdited;
+            }
+
+            base.OnNavigatedFrom(e);
+        }
+
+        private void BillEdited(object sender, BillEditedEventArgs args)
+        {
+            Popup billPopup = new Popup();
+            BillDetailView detail = new BillDetailView()
+            {
+                Width = Window.Current.Bounds.Width,
+                Height = Window.Current.Bounds.Height,
+                DataContext = args.Bill
+            };
+            detail.Ok += delegate
+            {
+                billPopup.IsOpen = false;
+                if (args.Completed != null)
+                    args.Completed();
+            };
+            detail.Cancel += delegate
+            {
+                billPopup.IsOpen = false;
+                if (args.Cancelled != null)
+                    args.Cancelled();
+            };
+            billPopup.Child = detail;
+            billPopup.IsOpen = true;
         }
     }
 }

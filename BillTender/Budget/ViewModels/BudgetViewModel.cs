@@ -6,14 +6,20 @@ using BillTender.ViewModels;
 using Parse;
 using UpdateControls;
 using UpdateControls.XAML;
+using System;
+using UpdateControls.Fields;
 
 namespace BillTender.Budget.ViewModels
 {
     public class BudgetViewModel : ProgressViewModel
     {
+        public delegate void BillEditedHandler(object sender, BillEditedEventArgs args);
+        public event BillEditedHandler BillEdited;
+
         private readonly ParseUser _user;
 
         private Independent _bills = new Independent();
+        private Independent<Bill> _selectedBill = new Independent<Bill>();
 
         public BudgetViewModel(ParseUser user)
         {
@@ -32,6 +38,12 @@ namespace BillTender.Budget.ViewModels
             }
         }
 
+        public Bill SelectedBill
+        {
+            get { return _selectedBill.Value; }
+            set { _selectedBill.Value = value; }
+        }
+
         public ICommand NewBill
         {
             get
@@ -39,14 +51,55 @@ namespace BillTender.Budget.ViewModels
                 return MakeCommand
                     .Do(delegate
                     {
-                        Perform(async delegate
+                        if (BillEdited != null)
                         {
                             var bill = ParseObject.Create<Bill>();
-                            await bill.SaveAsync();
-                            _user.AddToList("Bills", bill);
-                            await _user.SaveAsync();
-                            _bills.OnSet();
-                        });
+                            BillEditedEventArgs args = new BillEditedEventArgs
+                            {
+                                Bill = bill,
+                                Completed = delegate
+                                {
+                                    Perform(async delegate
+                                    {
+                                        await bill.SaveAsync();
+                                        _user.AddToList("Bills", bill);
+                                        await _user.SaveAsync();
+                                        _bills.OnSet();
+                                    });
+                                }
+                            };
+                            BillEdited(this, args);
+                        }
+                    });
+            }
+        }
+
+        public ICommand EditBill
+        {
+            get
+            {
+                return MakeCommand
+                    .When(() => _selectedBill.Value != null)
+                    .Do(delegate
+                    {
+                        var args = new BillEditedEventArgs
+                        {
+                            Bill = _selectedBill.Value,
+                            Completed = delegate
+                            {
+                                Perform(async delegate
+                                {
+                                    await _selectedBill.Value.SaveAsync();
+                                });
+                            },
+                            Cancelled = delegate
+                            {
+                                Perform(async delegate
+                                {
+                                    await _selectedBill.Value.FetchAsync();
+                                });
+                            }
+                        };
                     });
             }
         }

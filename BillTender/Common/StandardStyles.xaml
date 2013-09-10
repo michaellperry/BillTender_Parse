@@ -429,6 +429,21 @@
             Value="&#xE109;" />
     </Style>
 
+    <Style
+        x:Key="EditBillAppBarButtonStyle"
+        TargetType="ButtonBase"
+        BasedOn="{StaticResource AppBarButtonStyle}">
+        <Setter
+            Property="AutomationProperties.AutomationId"
+            Value="EditBillAppBarButton" />
+        <Setter
+            Property="AutomationProperties.Name"
+            Value="Edit Bill" />
+        <Setter
+            Property="Content"
+            Value="&#xE104;" />
+    </Style>
+
     <!--
     
     <Style x:Key="SkipBackAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">

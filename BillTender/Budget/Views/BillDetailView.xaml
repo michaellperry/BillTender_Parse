@@ -1,0 +1,92 @@
+﻿<UserControl
+    x:Class="BillTender.Budget.Views.BillDetailView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BillTender.Budget.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignWidth="1200 "
+    d:DesignHeight="900">
+
+    <Grid>
+        <Rectangle
+            Fill="#2E000000"/>
+        <Border
+            Background="Gainsboro"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center">
+            <Grid
+                Width="440"
+                HorizontalAlignment="Center"
+                Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition
+                        Height="Auto" />
+                    <RowDefinition
+                        Height="Auto" />
+                    <RowDefinition
+                        Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition
+                        Width="158" />
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock
+                        Text="Payee:"
+                        Margin="10,10,10,5"
+                        FontSize="18.667"
+                        Foreground="#CC000000" />
+                    <TextBox
+                        Text="{Binding Payee, Mode=TwoWay}"
+                        Margin="10,5,10,10" />
+                </StackPanel>
+                <StackPanel
+                    Grid.Column="1">
+                    <TextBlock
+                        Text="Amount:"
+                        Margin="10,10,10,5"
+                        FontSize="18.667"
+                        Foreground="#CC000000" />
+                    <TextBox
+                        Text="{Binding Amount, Mode=TwoWay}"
+                        Margin="10,5,10,10" />
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="1">
+                    <TextBlock
+                        Text="Frequency:"
+                        Margin="10,10,10,5"
+                        FontSize="18.667"
+                        Foreground="#CC000000" />
+                    <ComboBox
+                        Margin="10,5,10,10"
+                        SelectedItem="{Binding Frequency}">
+                        <x:String>Monthly</x:String>
+                        <x:String>Quarterly</x:String>
+                        <x:String>Annually</x:String>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.Column="1">
+                    <TextBlock
+                        Text="Next Due Date:"
+                        Margin="10,10,10,5"
+                        FontSize="18.667"
+                        Foreground="#CC000000" />
+                    <TextBox
+                        Text="{Binding NextDue, Mode=TwoWay}"
+                        Margin="10,5,10,10" />
+
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right">
+                	<Button HorizontalAlignment="Right" Style="{StaticResource OkDialogButtonStyle}" Click="Ok_Click" />
+                	<Button Style="{StaticResource CancelDialogButtonStyle}" Click="Cancel_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

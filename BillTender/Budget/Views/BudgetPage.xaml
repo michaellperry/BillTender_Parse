@@ -8,14 +8,16 @@
     mc:Ignorable="d"
     DataContext="{Binding Budget, Source={StaticResource Locator}}">
 
-    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+    <Grid
+        Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
         <Grid
             Margin="20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition
                     Width="80" />
                 <ColumnDefinition />
-                <ColumnDefinition Width="180"/>
+                <ColumnDefinition
+                    Width="180" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition
@@ -24,6 +26,7 @@
             </Grid.RowDefinitions>
             <ListView
                 ItemsSource="{Binding Bills}"
+                SelectedItem="{Binding SelectedBill, Mode=TwoWay}"
                 Grid.Row="1"
                 Grid.Column="1"
                 Margin="10">
@@ -47,17 +50,38 @@
                 Margin="40,0,40,16"
                 HorizontalAlignment="Center"
                 Width="Auto"
-                Visibility="Collapsed"/>
-            <TextBlock HorizontalAlignment="Right" TextWrapping="Wrap" Text="{Binding LastError}" VerticalAlignment="Bottom" Grid.Column="2" Margin="20" FontSize="18.667" Foreground="#FFEA8E8E" TextAlignment="Right"/>
-            <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Width="40" Height="40" Grid.Column="2" IsActive="{Binding Busy}"/>
+                Visibility="Collapsed" />
+            <TextBlock
+                HorizontalAlignment="Right"
+                TextWrapping="Wrap"
+                Text="{Binding LastError}"
+                VerticalAlignment="Bottom"
+                Grid.Column="2"
+                Margin="20"
+                FontSize="18.667"
+                Foreground="#FFEA8E8E"
+                TextAlignment="Right" />
+            <ProgressRing
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Width="40"
+                Height="40"
+                Grid.Column="2"
+                IsActive="{Binding Busy}" />
         </Grid>
     </Grid>
     <Page.BottomAppBar>
         <AppBar>
-            <Button
-                Style="{StaticResource AddBillAppBarButtonStyle}"
-                Command="{Binding NewBill}" HorizontalAlignment="Right" />
-
+            <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Right">
+                <Button
+                    Style="{StaticResource EditBillAppBarButtonStyle}"
+                    Command="{Binding EditBill}" />
+                <Button
+                    Style="{StaticResource AddBillAppBarButtonStyle}"
+                    Command="{Binding NewBill}" />
+            </StackPanel>
         </AppBar>
     </Page.BottomAppBar>
 </Page>
