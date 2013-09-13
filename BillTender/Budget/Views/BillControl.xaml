@@ -22,8 +22,12 @@
         <TextBlock
             FontSize="24"
             Text="{Binding Payee}" Margin="5" Grid.ColumnSpan="3" />
-        <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding Amount}" Margin="5" FontSize="16"/>
+        <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding Amount, Converter={StaticResource DoubleValueConverter}, ConverterParameter=0.00}" Margin="5" FontSize="16"/>
         <TextBlock Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Frequency}" Margin="5" FontSize="16"/>
-        <TextBlock Grid.Column="2" Grid.Row="1" TextWrapping="Wrap" Text="{Binding NextDue}" Margin="5" FontSize="16"/>
+        <TextBlock
+            Grid.Column="2"
+            Grid.Row="1"
+            TextWrapping="Wrap"
+            Text="{Binding NextDue, Converter={StaticResource DateValueConverter}, ConverterParameter=d}" Margin="5" FontSize="16"/>
     </Grid>
 </UserControl>

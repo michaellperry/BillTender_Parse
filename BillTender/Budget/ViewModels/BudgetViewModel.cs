@@ -8,6 +8,7 @@ using UpdateControls;
 using UpdateControls.XAML;
 using System;
 using UpdateControls.Fields;
+using System.Threading.Tasks;
 
 namespace BillTender.Budget.ViewModels
 {
@@ -24,6 +25,20 @@ namespace BillTender.Budget.ViewModels
         public BudgetViewModel(ParseUser user)
         {
             _user = user;
+        }
+
+        public void Load()
+        {
+            Perform(async delegate
+            {
+                IList<Bill> bills;
+                if (_user.TryGetValue<IList<Bill>>("Bills", out bills))
+                {
+                    var tasks = bills
+                        .Select(bill => bill.FetchAsync());
+                    await Task.WhenAll(tasks);
+                }
+            });
         }
 
         public IEnumerable<Bill> Bills
@@ -82,24 +97,28 @@ namespace BillTender.Budget.ViewModels
                     .When(() => _selectedBill.Value != null)
                     .Do(delegate
                     {
-                        var args = new BillEditedEventArgs
+                        if (BillEdited != null)
                         {
-                            Bill = _selectedBill.Value,
-                            Completed = delegate
+                            var args = new BillEditedEventArgs
                             {
-                                Perform(async delegate
+                                Bill = _selectedBill.Value,
+                                Completed = delegate
                                 {
-                                    await _selectedBill.Value.SaveAsync();
-                                });
-                            },
-                            Cancelled = delegate
-                            {
-                                Perform(async delegate
+                                    Perform(async delegate
+                                    {
+                                        await _selectedBill.Value.SaveAsync();
+                                    });
+                                },
+                                Cancelled = delegate
                                 {
-                                    await _selectedBill.Value.FetchAsync();
-                                });
-                            }
-                        };
+                                    Perform(async delegate
+                                    {
+                                        await _selectedBill.Value.FetchAsync();
+                                    });
+                                }
+                            };
+                            BillEdited(this, args);
+                        }
                     });
             }
         }

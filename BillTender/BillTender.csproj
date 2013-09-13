@@ -129,6 +129,10 @@
     <Compile Include="Settings\ViewModels\CurrentUserViewModel.cs" />
     <Compile Include="Settings\ViewModels\LogInViewModel.cs" />
     <Compile Include="Settings\ViewModels\PreferencesViewModel.cs" />
+    <Compile Include="ValueConverters\DateValueConverter.cs" />
+    <Compile Include="ValueConverters\FrequencyValueConverter.cs" />
+    <Compile Include="ValueConverters\DoubleValueConverter.cs" />
+    <Compile Include="ValueConverters\DecimalValueConverter.cs" />
     <Compile Include="ViewModels\ProgressViewModel.cs" />
     <Compile Include="Settings\ViewModels\SignUpViewModel.cs" />
     <Compile Include="Settings\Views\CurrentUserControl.xaml.cs">
@@ -223,10 +227,10 @@
       <HintPath>..\packages\Parse.1.2.7\lib\netcore45\Parse.WinRT.dll</HintPath>
     </Reference>
     <Reference Include="UpdateControls, Version=2.2.2.1, Culture=neutral, PublicKeyToken=19e83a8289e31a8f, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpdateControls.2.2.5.0\lib\windows8\UpdateControls.dll</HintPath>
+      <HintPath>..\packages\UpdateControls.2.2.5.1\lib\windows8\UpdateControls.dll</HintPath>
     </Reference>
     <Reference Include="UpdateControls.XAML, Version=2.2.2.1, Culture=neutral, PublicKeyToken=19e83a8289e31a8f, processorArchitecture=MSIL">
-      <HintPath>..\packages\UpdateControls.2.2.5.0\lib\windows8\UpdateControls.XAML.dll</HintPath>
+      <HintPath>..\packages\UpdateControls.2.2.5.1\lib\windows8\UpdateControls.XAML.dll</HintPath>
     </Reference>
     <Reference Include="WinRtBehaviors">
       <HintPath>..\packages\WinRtBehaviors.1.0.3\lib\winrt45\WinRtBehaviors.dll</HintPath>

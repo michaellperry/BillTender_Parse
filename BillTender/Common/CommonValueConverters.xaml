@@ -5,4 +5,12 @@
     xmlns:local="using:BillTender.Common">
     <ValueConverters:VisibleWhenTrueConverter
         x:Key="VisibleWhenTrueConverter" />
+    <ValueConverters:DecimalValueConverter
+        x:Key="DecimalValueConverter" />
+    <ValueConverters:DoubleValueConverter
+        x:Key="DoubleValueConverter" />
+    <ValueConverters:FrequencyValueConverter
+        x:Key="FrequencyValueConverter" />
+    <ValueConverters:DateValueConverter
+        x:Key="DateValueConverter" />
 </ResourceDictionary>

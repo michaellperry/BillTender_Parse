@@ -51,7 +51,7 @@
                         FontSize="18.667"
                         Foreground="#CC000000" />
                     <TextBox
-                        Text="{Binding Amount, Mode=TwoWay}"
+                        Text="{Binding Amount, Mode=TwoWay, Converter={StaticResource DoubleValueConverter}, ConverterParameter=0.00}"
                         Margin="10,5,10,10" />
                 </StackPanel>
                 <StackPanel
@@ -63,7 +63,7 @@
                         Foreground="#CC000000" />
                     <ComboBox
                         Margin="10,5,10,10"
-                        SelectedItem="{Binding Frequency}">
+                        SelectedIndex="{Binding Frequency, Mode=TwoWay, Converter={StaticResource FrequencyValueConverter}}">
                         <x:String>Monthly</x:String>
                         <x:String>Quarterly</x:String>
                         <x:String>Annually</x:String>
@@ -78,7 +78,7 @@
                         FontSize="18.667"
                         Foreground="#CC000000" />
                     <TextBox
-                        Text="{Binding NextDue, Mode=TwoWay}"
+                        Text="{Binding NextDue, Mode=TwoWay, Converter={StaticResource DateValueConverter}, ConverterParameter=d}"
                         Margin="10,5,10,10" />
 
                 </StackPanel>

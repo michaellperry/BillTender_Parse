@@ -15,10 +15,10 @@ namespace BillTender.Budget.Models
         }
 
         [ParseFieldName("Amount")]
-        public decimal Amount
+        public double Amount
         {
-            get { return GetProperty<decimal>(); }
-            set { SetProperty<decimal>(value); }
+            get { return GetProperty<double>(); }
+            set { SetProperty<double>(value); }
         }
 
         [ParseFieldName("Frequency")]

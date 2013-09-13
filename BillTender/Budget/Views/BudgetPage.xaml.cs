@@ -31,6 +31,7 @@ namespace BillTender.Budget.Views
             if (viewModel != null)
             {
                 viewModel.BillEdited += BillEdited;
+                viewModel.Load();
             }
 
             base.OnNavigatedTo(e);
