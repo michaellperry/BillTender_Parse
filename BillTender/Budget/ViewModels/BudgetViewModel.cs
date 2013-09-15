@@ -95,9 +95,16 @@ namespace BillTender.Budget.ViewModels
                                 Bill = _selectedBill.Value,
                                 Completed = delegate
                                 {
+                                    Perform(async delegate
+                                    {
+                                        await _selectedBill.Value
+                                            .SaveAsync();
+                                    });
                                 },
                                 Cancelled = delegate
                                 {
+                                    _selectedBill.Value
+                                        .Revert();
                                 }
                             };
                             BillEdited(this, args);
