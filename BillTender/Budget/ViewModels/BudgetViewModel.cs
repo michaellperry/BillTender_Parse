@@ -31,7 +31,15 @@ namespace BillTender.Budget.ViewModels
         {
             get
             {
-                return Enumerable.Empty<Bill>();
+                _bills.OnGet();
+                IList<Bill> bills = _user.Get<IList<Bill>>("Bills");
+                Perform(async delegate
+                {
+                    var tasks = bills
+                        .Select(bill => bill.FetchAsync());
+                    await Task.WhenAll(tasks);
+                });
+                return bills;
             }
         }
 
