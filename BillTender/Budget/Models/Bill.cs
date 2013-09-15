@@ -49,5 +49,20 @@ namespace BillTender.Budget.Models
                 .Select(v => (int)v)
                 .Contains(value);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == this)
+                return true;
+            Bill that = obj as Bill;
+            if (that == null)
+                return false;
+            return Object.Equals(this.ObjectId, that.ObjectId);
+        }
+
+        public override int GetHashCode()
+        {
+            return ObjectId.GetHashCode();
+        }
     }
 }
