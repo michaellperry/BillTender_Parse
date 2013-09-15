@@ -27,28 +27,10 @@ namespace BillTender.Budget.ViewModels
             _user = user;
         }
 
-        public void Load()
-        {
-            Perform(async delegate
-            {
-                IList<Bill> bills;
-                if (_user.TryGetValue<IList<Bill>>("Bills", out bills))
-                {
-                    var tasks = bills
-                        .Select(bill => bill.FetchAsync());
-                    await Task.WhenAll(tasks);
-                }
-            });
-        }
-
         public IEnumerable<Bill> Bills
         {
             get
             {
-                _bills.OnGet();
-                IList<Bill> bills;
-                if (_user.TryGetValue<IList<Bill>>("Bills", out bills))
-                    return bills;
                 return Enumerable.Empty<Bill>();
             }
         }
@@ -68,19 +50,14 @@ namespace BillTender.Budget.ViewModels
                     {
                         if (BillEdited != null)
                         {
-                            var bill = ParseObject.Create<Bill>();
+                            var bill = new Bill();
+                            bill.NextDue = DateTime.Today;
                             BillEditedEventArgs args = new BillEditedEventArgs
                             {
                                 Bill = bill,
                                 Completed = delegate
                                 {
-                                    Perform(async delegate
-                                    {
-                                        await bill.SaveAsync();
-                                        _user.AddToList("Bills", bill);
-                                        await _user.SaveAsync();
-                                        _bills.OnSet();
-                                    });
+                                    _bills.OnSet();
                                 }
                             };
                             BillEdited(this, args);
@@ -104,17 +81,9 @@ namespace BillTender.Budget.ViewModels
                                 Bill = _selectedBill.Value,
                                 Completed = delegate
                                 {
-                                    Perform(async delegate
-                                    {
-                                        await _selectedBill.Value.SaveAsync();
-                                    });
                                 },
                                 Cancelled = delegate
                                 {
-                                    Perform(async delegate
-                                    {
-                                        await _selectedBill.Value.FetchAsync();
-                                    });
                                 }
                             };
                             BillEdited(this, args);

@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -31,7 +32,6 @@ namespace BillTender.Budget.Views
             if (viewModel != null)
             {
                 viewModel.BillEdited += BillEdited;
-                viewModel.Load();
             }
 
             base.OnNavigatedTo(e);
@@ -50,7 +50,10 @@ namespace BillTender.Budget.Views
 
         private void BillEdited(object sender, BillEditedEventArgs args)
         {
-            Popup billPopup = new Popup();
+            Popup billPopup = new Popup()
+            {
+                ChildTransitions = new TransitionCollection { new PopupThemeTransition() }
+            };
             BillDetailView detail = new BillDetailView()
             {
                 Width = Window.Current.Bounds.Width,
