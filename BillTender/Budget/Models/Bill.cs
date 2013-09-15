@@ -1,14 +1,45 @@
 ﻿using System;
 using System.Linq;
+using Parse;
 
 namespace BillTender.Budget.Models
 {
-    public class Bill
+    [ParseClassName("Bill")]
+    public class Bill : ParseObject
     {
-        public string Payee { get; set; }
-        public double Amount { get; set; }
-        public Frequency Frequency { get; set; }
-        public DateTime NextDue { get; set; }
+        [ParseFieldName("Payee")]
+        public string Payee
+        {
+            get { return GetProperty<string>(); }
+            set { SetProperty<string>(value); }
+        }
+
+        [ParseFieldName("Amount")]
+        public double Amount
+        {
+            get { return GetProperty<double>(); }
+            set { SetProperty<double>(value); }
+        }
+
+        [ParseFieldName("Frequency")]
+        public Frequency Frequency
+        {
+            get
+            {
+                int value = GetProperty<int>();
+                if (!IsValidFrequency(value))
+                    return Frequency.Monthly;
+                return (Frequency)value;
+            }
+            set { SetProperty<int>((int)value); }
+        }
+
+        [ParseFieldName("NextDue")]
+        public DateTime NextDue
+        {
+            get { return GetProperty<DateTime>(); }
+            set { SetProperty<DateTime>(value); }
+        }
 
         public static bool IsValidFrequency(int value)
         {
