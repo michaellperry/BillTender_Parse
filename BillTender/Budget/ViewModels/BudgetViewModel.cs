@@ -50,14 +50,18 @@ namespace BillTender.Budget.ViewModels
                     {
                         if (BillEdited != null)
                         {
-                            var bill = new Bill();
+                            var bill = ParseObject.Create<Bill>();
                             bill.NextDue = DateTime.Today;
                             BillEditedEventArgs args = new BillEditedEventArgs
                             {
                                 Bill = bill,
                                 Completed = delegate
                                 {
-                                    _bills.OnSet();
+                                    Perform(async delegate
+                                    {
+                                        await bill.SaveAsync();
+                                        _bills.OnSet();
+                                    });
                                 }
                             };
                             BillEdited(this, args);
