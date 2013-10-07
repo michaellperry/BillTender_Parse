@@ -1,7 +1,6 @@
 ﻿using UpdateControls;
 using UpdateControls.Fields;
 using System;
-using Parse;
 
 namespace BillTender.Settings.Models
 {
@@ -17,13 +16,14 @@ namespace BillTender.Settings.Models
             _currentUser.OnSet();
         }
 
-        public ParseUser CurrentUser
+        public object CurrentUser
         {
             get
             {
                 _currentUser.OnGet();
 
-                return ParseUser.CurrentUser;
+                // TODO: Get the current user here.
+                return null;
             }
         }
 

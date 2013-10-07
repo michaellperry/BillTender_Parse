@@ -1,6 +1,5 @@
 ﻿using System;
 using BillTender.Settings.ViewModels;
-using Parse;
 using UpdateControls.XAML;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -34,13 +33,7 @@ namespace BillTender.Settings.Views
                 viewModel.LastError = string.Empty;
                 viewModel.Busy = true;
 
-                var user = new ParseUser
-                {
-                    Username = UserNameTextBox.Text,
-                    Email = EmailTextBox.Text,
-                    Password = PasswordTextBox.Password
-                };
-                await user.SignUpAsync();
+                // TODO: Sign up here.
 
                 UserNameTextBox.Text = string.Empty;
                 EmailTextBox.Text = string.Empty;

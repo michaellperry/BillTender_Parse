@@ -34,10 +34,6 @@ namespace BillTender.Settings.ViewModels
         {
             get
             {
-                if (_accountModel.CurrentUser != null)
-                    return AccountState.LoggedIn;
-                if (_accountModel.IsExistingUser)
-                    return AccountState.LoggingIn;
                 return AccountState.SigningUp;
             }
         }
