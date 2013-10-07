@@ -111,7 +111,6 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ParseConfig.cs" />
-    <Compile Include="ParseConfig_Keys.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\Models\AccountModel.cs" />
     <Compile Include="Settings\Models\SharingLevel.cs" />
