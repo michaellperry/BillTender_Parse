@@ -1,6 +1,5 @@
 ﻿using System.Windows.Input;
 using BillTender.Settings.Models;
-using Parse;
 using UpdateControls.XAML;
 
 namespace BillTender.Settings.ViewModels
@@ -18,9 +17,6 @@ namespace BillTender.Settings.ViewModels
         {
             get
             {
-                if (_accountModel.CurrentUser != null)
-                    return _accountModel.CurrentUser
-                        .Username;
                 return string.Empty;
             }
         }
@@ -32,7 +28,6 @@ namespace BillTender.Settings.ViewModels
                 return MakeCommand
                     .Do(delegate
                     {
-                        ParseUser.LogOut();
                         _accountModel.CurrentUserChanged();
                     });
             }

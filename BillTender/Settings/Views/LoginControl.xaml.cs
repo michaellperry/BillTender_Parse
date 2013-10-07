@@ -1,6 +1,5 @@
 ﻿using System;
 using BillTender.Settings.ViewModels;
-using Parse;
 using UpdateControls.XAML;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -25,10 +24,6 @@ namespace BillTender.Settings.Views
             {
                 viewModel.LastError = string.Empty;
                 viewModel.Busy = true;
-
-                await ParseUser.LogInAsync(
-                    UserNameTextBox.Text,
-                    PasswordTextBox.Password);
 
                 UserNameTextBox.Text = string.Empty;
                 PasswordTextBox.Password = string.Empty;

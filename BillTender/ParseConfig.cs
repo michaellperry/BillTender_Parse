@@ -1,5 +1,4 @@
 ﻿using System;
-using Parse;
 
 namespace BillTender
 {
@@ -7,8 +6,6 @@ namespace BillTender
     {
         public static void Initialize()
         {
-            ParseObject.RegisterSubclass<BillTender.Budget.Models.Bill>();
-
             var config = new ParseConfig();
             config.InitializeParse();
         }

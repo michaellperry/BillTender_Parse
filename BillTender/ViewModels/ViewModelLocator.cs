@@ -48,7 +48,7 @@ namespace BillTender.ViewModels
                     if (_accountModel.CurrentUser == null)
                         return null;
 
-                    return new PreferencesViewModel(_accountModel.CurrentUser);
+                    return new PreferencesViewModel();
                 });
             }
         }
@@ -62,7 +62,7 @@ namespace BillTender.ViewModels
                     if (_accountModel.CurrentUser == null)
                         return null;
 
-                    return new BillTender.Budget.ViewModels.BudgetViewModel(_accountModel.CurrentUser);
+                    return new BillTender.Budget.ViewModels.BudgetViewModel();
                 });
             }
         }

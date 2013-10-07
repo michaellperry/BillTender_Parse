@@ -106,7 +106,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Behaviors\BindVisualStateBehavior.cs" />
     <Compile Include="Budget\Models\Bill.cs" />
     <Compile Include="Budget\Models\Frequency.cs" />
     <Compile Include="Budget\ViewModels\BudgetViewModel.cs" />
@@ -121,7 +120,6 @@
       <DependentUpon>BudgetPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ParseConfig.cs" />
-    <Compile Include="ParseConfig_Keys.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\Models\AccountModel.cs" />
     <Compile Include="Settings\Models\SharingLevel.cs" />
@@ -220,20 +218,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Parse">
-      <HintPath>..\packages\Parse.1.2.7\lib\netcore45\Parse.dll</HintPath>
-    </Reference>
-    <Reference Include="Parse.WinRT">
-      <HintPath>..\packages\Parse.1.2.7\lib\netcore45\Parse.WinRT.dll</HintPath>
-    </Reference>
     <Reference Include="UpdateControls, Version=2.2.2.1, Culture=neutral, PublicKeyToken=19e83a8289e31a8f, processorArchitecture=MSIL">
       <HintPath>..\packages\UpdateControls.2.2.5.1\lib\windows8\UpdateControls.dll</HintPath>
     </Reference>
     <Reference Include="UpdateControls.XAML, Version=2.2.2.1, Culture=neutral, PublicKeyToken=19e83a8289e31a8f, processorArchitecture=MSIL">
       <HintPath>..\packages\UpdateControls.2.2.5.1\lib\windows8\UpdateControls.XAML.dll</HintPath>
-    </Reference>
-    <Reference Include="WinRtBehaviors">
-      <HintPath>..\packages\WinRtBehaviors.1.0.3\lib\winrt45\WinRtBehaviors.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup />
