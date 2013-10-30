@@ -18,14 +18,14 @@ namespace BillTender.Budget.ViewModels
         public delegate void BillEditedHandler(object sender, BillEditedEventArgs args);
         public event BillEditedHandler BillEdited;
 
-        private readonly ParseUser _user;
+        private readonly BillTender.Families.Models.Family _family;
 
         private IndependentList<Bill> _bills = new IndependentList<Bill>();
         private Independent<Bill> _selectedBill = new Independent<Bill>();
 
-        public BudgetViewModel(ParseUser user)
+        public BudgetViewModel(BillTender.Families.Models.Family family)
         {
-            _user = user;
+            _family = family;
         }
 
         public void Load()

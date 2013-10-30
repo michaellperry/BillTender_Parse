@@ -120,6 +120,10 @@
     <Compile Include="Budget\Views\BudgetPage.xaml.cs">
       <DependentUpon>BudgetPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Families\Models\Family.cs" />
+    <Compile Include="Families\Models\FamilySelectionModel.cs" />
+    <Compile Include="Families\ViewModels\FamilyHeaderViewModel.cs" />
+    <Compile Include="Families\ViewModels\FamilySelectorViewModel.cs" />
     <Compile Include="ParseConfig.cs" />
     <Compile Include="ParseConfig_Keys.cs" />
     <Compile Include="Payments\Models\Payment.cs" />
@@ -229,11 +233,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Parse">
-      <HintPath>..\packages\Parse.1.2.7\lib\netcore45\Parse.dll</HintPath>
+    <Reference Include="Parse, Version=1.2.9.0, Culture=neutral, PublicKeyToken=ba48c3a442de616e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Parse.1.2.9\lib\netcore45\Parse.dll</HintPath>
     </Reference>
-    <Reference Include="Parse.WinRT">
-      <HintPath>..\packages\Parse.1.2.7\lib\netcore45\Parse.WinRT.dll</HintPath>
+    <Reference Include="Parse.WinRT, Version=1.2.9.0, Culture=neutral, PublicKeyToken=ba48c3a442de616e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Parse.1.2.9\lib\netcore45\Parse.WinRT.dll</HintPath>
     </Reference>
     <Reference Include="UpdateControls, Version=2.2.2.1, Culture=neutral, PublicKeyToken=19e83a8289e31a8f, processorArchitecture=MSIL">
       <HintPath>..\packages\UpdateControls.2.2.5.1\lib\windows8\UpdateControls.dll</HintPath>
@@ -245,7 +251,9 @@
       <HintPath>..\packages\WinRtBehaviors.1.0.3\lib\winrt45\WinRtBehaviors.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Families\Views\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>

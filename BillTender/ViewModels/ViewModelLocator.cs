@@ -5,16 +5,20 @@ using System;
 using Parse;
 using BillTender.Payments.ViewModels;
 using BillTender.Budget.ViewModels;
+using BillTender.Families.ViewModels;
+using BillTender.Families.Models;
 
 namespace BillTender.ViewModels
 {
     public class ViewModelLocator : ViewModelLocatorBase
     {
         private readonly AccountModel _accountModel;
+        private readonly FamilySelectionModel _familySelection;
 
         public ViewModelLocator()
         {
             _accountModel = new AccountModel();
+            _familySelection = new FamilySelectionModel();
         }
 
         public object CurrentUser
@@ -52,6 +56,20 @@ namespace BillTender.ViewModels
                         return null;
 
                     return new PreferencesViewModel(_accountModel.CurrentUser);
+                });
+            }
+        }
+
+        public object FamilySelector
+        {
+            get
+            {
+                return ViewModel(delegate
+                {
+                    if (_accountModel.CurrentUser == null)
+                        return null;
+
+                    return new FamilySelectorViewModel(_accountModel.CurrentUser, _familySelection);
                 });
             }
         }
