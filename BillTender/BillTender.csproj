@@ -122,8 +122,11 @@
     </Compile>
     <Compile Include="Families\Models\Family.cs" />
     <Compile Include="Families\Models\FamilySelectionModel.cs" />
-    <Compile Include="Families\ViewModels\FamilyHeaderViewModel.cs" />
+    <Compile Include="Families\ViewModels\FamilySelectorDesignDataModel.cs" />
     <Compile Include="Families\ViewModels\FamilySelectorViewModel.cs" />
+    <Compile Include="Families\Views\FamilySelectorView.xaml.cs">
+      <DependentUpon>FamilySelectorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ParseConfig.cs" />
     <Compile Include="ParseConfig_Keys.cs" />
     <Compile Include="Payments\Models\Payment.cs" />
@@ -208,6 +211,7 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Payments\Views\PaymentPage.xaml">
+    <Page Include="Families\Views\FamilySelectorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -251,9 +255,7 @@
       <HintPath>..\packages\WinRtBehaviors.1.0.3\lib\winrt45\WinRtBehaviors.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Families\Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>

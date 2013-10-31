@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using BillTender.Families.Models;
 using BillTender.ViewModels;
 using Parse;
-using Parse.Internal;
-using UpdateControls.Fields;
 
 namespace BillTender.Families.ViewModels
 {
@@ -28,6 +26,7 @@ namespace BillTender.Families.ViewModels
                 var tasks = families.Select(family => family.FetchAsync());
                 await Task.WhenAll(tasks);
                 _familySelection.Families = families.ToList();
+                _familySelection.SelectedFamily = families.FirstOrDefault();
             });
         }
 
