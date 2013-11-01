@@ -459,6 +459,36 @@
             Value="$" />
     </Style>
 
+    <Style
+        x:Key="AddFamilyAppBarButtonStyle"
+        TargetType="ButtonBase"
+        BasedOn="{StaticResource AppBarButtonStyle}">
+        <Setter
+            Property="AutomationProperties.AutomationId"
+            Value="AddFamilyAppBarButton" />
+        <Setter
+            Property="AutomationProperties.Name"
+            Value="Add Family" />
+        <Setter
+            Property="Content"
+            Value="&#xE109;" />
+    </Style>
+
+    <Style
+        x:Key="RemoveFamilyAppBarButtonStyle"
+        TargetType="ButtonBase"
+        BasedOn="{StaticResource AppBarButtonStyle}">
+        <Setter
+            Property="AutomationProperties.AutomationId"
+            Value="RemoveFamliyAppBarButton" />
+        <Setter
+            Property="AutomationProperties.Name"
+            Value="Remove Famliy" />
+        <Setter
+            Property="Content"
+            Value="&#xE108;" />
+    </Style>
+
     <!--
     
     <Style x:Key="SkipBackAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">

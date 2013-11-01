@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using BillTender.Families.Models;
 using BillTender.ViewModels;
 using Parse;
+using UpdateControls.XAML;
 
 namespace BillTender.Families.ViewModels
 {
@@ -45,6 +47,21 @@ namespace BillTender.Families.ViewModels
         {
             get { return _familySelection.SelectedFamily; }
             set { _familySelection.SelectedFamily = value; }
+        }
+
+        public ICommand AddFamily
+        {
+            get
+            {
+                return MakeCommand
+                    .Do(delegate
+                    {
+                        Family family = ParseObject.Create<Family>();
+                        ParseRelation<Family> families = _user.GetRelation<Family>("Families");
+                        families.Add(family);
+                        _familySelection.Families.Add(family);
+                    });
+            }
         }
     }
 }

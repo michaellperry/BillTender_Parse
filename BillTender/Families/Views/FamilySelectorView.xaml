@@ -7,8 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:BillTender.Families.ViewModels"
     mc:Ignorable="d"
-    d:DesignHeight="185.667"
-    d:DesignWidth="490.667">
+    d:DesignHeight="116"
+    d:DesignWidth="783.667">
     <UserControl.Resources>
         <vm:FamilySelectorDesignDataModel
             x:Key="DataModel" />
@@ -211,15 +211,25 @@
             Path="FamilySelector" />
     </UserControl.DataContext>
     <StackPanel>
-        <ListBox
-            Background="{x:Null}"
-            BorderBrush="{x:Null}"
-            ItemsPanel="{StaticResource FamilyItemsPanelTemplate}"
-            ScrollViewer.HorizontalScrollBarVisibility="Auto"
-            ScrollViewer.VerticalScrollBarVisibility="Disabled"
-            ItemsSource="{Binding Families, Mode=OneWay}"
-            SelectedItem="{Binding SelectedFamily}"
-            ItemTemplate="{StaticResource FamilyDataTemplate}"
-            Foreground="White" ItemContainerStyle="{StaticResource FamilyListBoxItemStyle}" Style="{StaticResource FamilyListBoxStyle}" />
+    	<Grid Height="100">
+    		<Grid.ColumnDefinitions>
+    			<ColumnDefinition/>
+    			<ColumnDefinition Width="Auto"/>
+    		</Grid.ColumnDefinitions>
+    		<ListBox
+    			Background="{x:Null}"
+    			BorderBrush="{x:Null}"
+    			ItemsPanel="{StaticResource FamilyItemsPanelTemplate}"
+    			ScrollViewer.HorizontalScrollBarVisibility="Auto"
+    			ScrollViewer.VerticalScrollBarVisibility="Disabled"
+    			ItemsSource="{Binding Families, Mode=OneWay}"
+    			SelectedItem="{Binding SelectedFamily}"
+    			ItemTemplate="{StaticResource FamilyDataTemplate}"
+    			Foreground="White" ItemContainerStyle="{StaticResource FamilyListBoxItemStyle}" Style="{StaticResource FamilyListBoxStyle}" />
+    		<StackPanel Grid.Column="1" Orientation="Horizontal">
+    			<Button Style="{StaticResource AddFamilyAppBarButtonStyle}"/>
+    			<Button Style="{StaticResource RemoveFamilyAppBarButtonStyle}"/>
+    		</StackPanel>
+    	</Grid>
     </StackPanel>
 </UserControl>
