@@ -17,7 +17,8 @@ namespace BillTender.Families.ViewModels
             FamilySelectionModel familySelection = new FamilySelectionModel();
             Family perry = new Family { Name = "Perry" };
             Family wilson = new Family { Name = "Wilson" };
-            familySelection.Families = new List<Family> { perry, wilson };
+            familySelection.AddFamily(perry);
+            familySelection.AddFamily(wilson);
             familySelection.SelectedFamily = perry;
 
             _familySelector = new FamilySelectorViewModel(

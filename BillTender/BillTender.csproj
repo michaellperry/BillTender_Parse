@@ -122,6 +122,7 @@
     </Compile>
     <Compile Include="Families\Models\Family.cs" />
     <Compile Include="Families\Models\FamilySelectionModel.cs" />
+    <Compile Include="Families\ViewModels\FamilyEditedEventArgs.cs" />
     <Compile Include="Families\ViewModels\FamilySelectorDesignDataModel.cs" />
     <Compile Include="Families\ViewModels\FamilySelectorViewModel.cs" />
     <Compile Include="Families\Views\FamilyDialog.xaml.cs">
@@ -130,6 +131,7 @@
     <Compile Include="Families\Views\FamilySelectorView.xaml.cs">
       <DependentUpon>FamilySelectorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DataContextChangedHelper.cs" />
     <Compile Include="ParseConfig.cs" />
     <Compile Include="ParseConfig_Keys.cs" />
     <Compile Include="Payments\Models\Payment.cs" />

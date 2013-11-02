@@ -5,10 +5,14 @@
     xmlns:local="using:BillTender.Families.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:callisto="using:Callisto.Controls"
+    xmlns:families="using:BillTender.Families.Views"
     xmlns:vm="using:BillTender.Families.ViewModels"
     mc:Ignorable="d"
     d:DesignHeight="116"
-    d:DesignWidth="783.667">
+    d:DesignWidth="783.667"
+    d:DataContext="{Binding FamilySelector, Source={StaticResource DataModel}}"
+    DataContext="{Binding FamilySelector, Source={StaticResource Locator}}">
     <UserControl.Resources>
         <vm:FamilySelectorDesignDataModel
             x:Key="DataModel" />
@@ -205,11 +209,6 @@
         	</Setter>
         </Style>
     </UserControl.Resources>
-    <UserControl.DataContext>
-        <Binding
-            Source="{StaticResource DataModel}"
-            Path="FamilySelector" />
-    </UserControl.DataContext>
     <StackPanel>
     	<Grid Height="100">
     		<Grid.ColumnDefinitions>
@@ -223,13 +222,22 @@
     			ScrollViewer.HorizontalScrollBarVisibility="Auto"
     			ScrollViewer.VerticalScrollBarVisibility="Disabled"
     			ItemsSource="{Binding Families, Mode=OneWay}"
-    			SelectedItem="{Binding SelectedFamily}"
+    			SelectedItem="{Binding SelectedFamily, Mode=TwoWay}"
     			ItemTemplate="{StaticResource FamilyDataTemplate}"
     			Foreground="White" ItemContainerStyle="{StaticResource FamilyListBoxItemStyle}" Style="{StaticResource FamilyListBoxStyle}" />
     		<StackPanel Grid.Column="1" Orientation="Horizontal">
-    			<Button Style="{StaticResource AddFamilyAppBarButtonStyle}"/>
-    			<Button Style="{StaticResource RemoveFamilyAppBarButtonStyle}"/>
+    			<Button Style="{StaticResource AddFamilyAppBarButtonStyle}" Command="{Binding AddFamily}"/>
+                <Button Style="{StaticResource EditFamilyAppBarButtonStyle}" Command="{Binding EditFamily}" />
+                <Button Style="{StaticResource RemoveFamilyAppBarButtonStyle}" Command="{Binding RemoveFamily}"/>
     		</StackPanel>
     	</Grid>
+        <callisto:CustomDialog
+            x:Name="FamilyDialog"
+            Title="New Family"
+            BackButtonVisibility="Visible"
+            Background="#FFAFB4E2"
+            BackButtonClicked="FamilyDialog_BackButtonClicked">
+            <families:FamilyDialog Ok="FamilyDialog_Ok" Cancel="FamilyDialog_Cancel" />
+        </callisto:CustomDialog>
     </StackPanel>
 </UserControl>

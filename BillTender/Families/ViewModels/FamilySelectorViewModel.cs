@@ -11,6 +11,9 @@ namespace BillTender.Families.ViewModels
 {
     public class FamilySelectorViewModel : ProgressViewModel
     {
+        public delegate void FamilyEditedHandler(object sender, FamilyEditedEventArgs args);
+        public event FamilyEditedHandler FamilyEdited;
+
         private readonly ParseUser _user;
         private readonly FamilySelectionModel _familySelection;
 
@@ -27,7 +30,8 @@ namespace BillTender.Families.ViewModels
                 var families = await _user.GetRelation<Family>("Families").Query.FindAsync();
                 var tasks = families.Select(family => family.FetchAsync());
                 await Task.WhenAll(tasks);
-                _familySelection.Families = families.ToList();
+                foreach (var family in families)
+                    _familySelection.AddFamily(family);
                 _familySelection.SelectedFamily = families.FirstOrDefault();
             });
         }
@@ -56,10 +60,85 @@ namespace BillTender.Families.ViewModels
                 return MakeCommand
                     .Do(delegate
                     {
-                        Family family = ParseObject.Create<Family>();
+                        if (FamilyEdited != null)
+                        {
+                            Family family = ParseObject.Create<Family>();
+                            FamilyEditedEventArgs args = new FamilyEditedEventArgs
+                            {
+                                NewFamily = true,
+                                Family = family,
+                                Completed = delegate
+                                {
+                                    Perform(async delegate
+                                    {
+                                        await family.SaveAsync();
+
+                                        ParseRelation<Family> families = _user.GetRelation<Family>("Families");
+                                        families.Add(family);
+                                        await _user.SaveAsync();
+
+                                        _familySelection.AddFamily(family);
+                                        _familySelection.SelectedFamily = family;
+                                    });
+                                }
+                            };
+                            FamilyEdited(this, args);
+                        }
+                    });
+            }
+        }
+
+        public ICommand EditFamily
+        {
+            get
+            {
+                return MakeCommand
+                    .When(() => _familySelection.SelectedFamily != null)
+                    .Do(delegate
+                    {
+                        if (FamilyEdited != null)
+                        {
+                            Family selectedFamily = _familySelection.SelectedFamily;
+                            FamilyEditedEventArgs args = new FamilyEditedEventArgs
+                            {
+                                NewFamily = false,
+                                Family = selectedFamily,
+                                Completed = delegate
+                                {
+                                    Perform(async delegate
+                                    {
+                                        await selectedFamily.SaveAsync();
+                                    });
+                                },
+                                Cancelled = delegate
+                                {
+                                    selectedFamily.Revert();
+                                }
+                            };
+                            FamilyEdited(this, args);
+                        }
+                    });
+            }
+        }
+
+        public ICommand RemoveFamily
+        {
+            get
+            {
+                return MakeCommand
+                    .When(() => _familySelection.SelectedFamily != null)
+                    .Do(delegate
+                    {
+                        Family selectedFamily = _familySelection.SelectedFamily;
                         ParseRelation<Family> families = _user.GetRelation<Family>("Families");
-                        families.Add(family);
-                        _familySelection.Families.Add(family);
+                        families.Remove(selectedFamily);
+                        _familySelection.RemoveFamily(selectedFamily);
+                        _familySelection.SelectedFamily = _familySelection.Families.FirstOrDefault();
+
+                        Perform(async delegate
+                        {
+                            await _user.SaveAsync();
+                        });
                     });
             }
         }

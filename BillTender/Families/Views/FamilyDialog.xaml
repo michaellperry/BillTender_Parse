@@ -14,11 +14,11 @@
         <TextBlock
             Text="Family Name:" Margin="10,10,10,0" FontSize="18.667" Foreground="Black" />
         <TextBox
-            Text="{Binding Name}" Margin="10,0,10,10" />
+            Text="{Binding Name, Mode=TwoWay}" Margin="10,0,10,10" />
         <StackPanel
             Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Style="{StaticResource OkDialogButtonStyle}" />
-            <Button Style="{StaticResource CancelDialogButtonStyle}" />
+            <Button Style="{StaticResource OkDialogButtonStyle}" Click="Ok_Click" />
+            <Button Style="{StaticResource CancelDialogButtonStyle}" Click="Cancel_Click" />
         </StackPanel>
     </StackPanel>
 </UserControl>

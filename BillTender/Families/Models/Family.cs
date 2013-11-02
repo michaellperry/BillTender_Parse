@@ -21,7 +21,7 @@ namespace BillTender.Families.Models
         [ParseFieldName("Bills")]
         public IList<Bill> Bills
         {
-            get { return GetProperty<IList<Bill>>(); }
+            get { return GetProperty<IList<Bill>>() ?? new List<Bill>(); }
         }
 
         public void AddBill(Bill bill)

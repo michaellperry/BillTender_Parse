@@ -80,7 +80,7 @@ namespace BillTender.ViewModels
             {
                 return ViewModel(delegate
                 {
-                    if (_accountModel.CurrentUser == null)
+                    if (_familySelection.SelectedFamily == null)
                         return null;
 
                     BudgetViewModel viewModel = new BudgetViewModel(_accountModel.CurrentUser);

@@ -475,6 +475,21 @@
     </Style>
 
     <Style
+        x:Key="EditFamilyAppBarButtonStyle"
+        TargetType="ButtonBase"
+        BasedOn="{StaticResource AppBarButtonStyle}">
+        <Setter
+            Property="AutomationProperties.AutomationId"
+            Value="EditFamilyAppBarButton" />
+        <Setter
+            Property="AutomationProperties.Name"
+            Value="Edit Family" />
+        <Setter
+            Property="Content"
+            Value="&#xE104;" />
+    </Style>
+
+    <Style
         x:Key="RemoveFamilyAppBarButtonStyle"
         TargetType="ButtonBase"
         BasedOn="{StaticResource AppBarButtonStyle}">
@@ -510,11 +525,6 @@
         <Setter Property="AutomationProperties.AutomationId" Value="PauseAppBarButton"/>
         <Setter Property="AutomationProperties.Name" Value="Pause"/>
         <Setter Property="Content" Value="&#xE103;"/>
-    </Style>
-    <Style x:Key="EditAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
-        <Setter Property="AutomationProperties.AutomationId" Value="EditAppBarButton"/>
-        <Setter Property="AutomationProperties.Name" Value="Edit"/>
-        <Setter Property="Content" Value="&#xE104;"/>
     </Style>
     <Style x:Key="SaveAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="SaveAppBarButton"/>
