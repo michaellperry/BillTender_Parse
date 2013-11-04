@@ -3,17 +3,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using BillTender.Families.Models;
+using BillTender.Families.Views;
+using BillTender.Helpers;
 using BillTender.ViewModels;
 using Parse;
 using UpdateControls.XAML;
+using Windows.UI;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace BillTender.Families.ViewModels
 {
     public class FamilySelectorViewModel : ProgressViewModel
     {
-        public delegate void FamilyEditedHandler(object sender, FamilyEditedEventArgs args);
-        public event FamilyEditedHandler FamilyEdited;
-
         private readonly ParseUser _user;
         private readonly FamilySelectionModel _familySelection;
 
@@ -65,27 +68,21 @@ namespace BillTender.Families.ViewModels
                 return MakeCommand
                     .Do(delegate
                     {
-                        if (FamilyEdited != null)
-                        {
-                            Family family = ParseObject.Create<Family>();
-                            FamilyEditedEventArgs args = new FamilyEditedEventArgs
+                        Family family = ParseObject.Create<Family>();
+                        DialogManager.ShowFamilyDialog(
+                            "New Family",
+                            family,
+                            completed: delegate
                             {
-                                NewFamily = true,
-                                Family = family,
-                                Completed = delegate
+                                Perform(async delegate
                                 {
-                                    Perform(async delegate
-                                    {
-                                        family.AddMember(_user);
-                                        await family.SaveAsync();
+                                    family.AddMember(_user);
+                                    await family.SaveAsync();
 
-                                        _familySelection.AddFamily(family);
-                                        _familySelection.SelectedFamily = family;
-                                    });
-                                }
-                            };
-                            FamilyEdited(this, args);
-                        }
+                                    _familySelection.AddFamily(family);
+                                    _familySelection.SelectedFamily = family;
+                                });
+                            });
                     });
             }
         }
@@ -98,27 +95,21 @@ namespace BillTender.Families.ViewModels
                     .When(() => _familySelection.SelectedFamily != null)
                     .Do(delegate
                     {
-                        if (FamilyEdited != null)
-                        {
-                            Family selectedFamily = _familySelection.SelectedFamily;
-                            FamilyEditedEventArgs args = new FamilyEditedEventArgs
+                        Family selectedFamily = _familySelection.SelectedFamily;
+                        DialogManager.ShowFamilyDialog(
+                            "Edit Family",
+                            selectedFamily,
+                            completed: delegate
                             {
-                                NewFamily = false,
-                                Family = selectedFamily,
-                                Completed = delegate
+                                Perform(async delegate
                                 {
-                                    Perform(async delegate
-                                    {
-                                        await selectedFamily.SaveAsync();
-                                    });
-                                },
-                                Cancelled = delegate
-                                {
-                                    selectedFamily.Revert();
-                                }
-                            };
-                            FamilyEdited(this, args);
-                        }
+                                    await selectedFamily.SaveAsync();
+                                });
+                            },
+                            cancelled: delegate
+                            {
+                                selectedFamily.Revert();
+                            });
                     });
             }
         }

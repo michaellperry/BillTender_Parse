@@ -4,14 +4,15 @@
     xmlns:local="using:BillTender.Budget.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:Views="using:BillTender.Families.Views"
+    xmlns:callisto="using:Callisto.Controls"
+    xmlns:families="using:BillTender.Families.Views"
     x:Class="BillTender.Budget.Views.BudgetPage"
     mc:Ignorable="d"
     DataContext="{Binding Budget, Source={StaticResource Locator}}">
 
     <Page.TopAppBar>
         <AppBar>
-            <Views:FamilySelectorView/>
+            <families:FamilySelectorView/>
         </AppBar>
     </Page.TopAppBar>
     <Page.BottomAppBar>
@@ -106,5 +107,5 @@
 				Grid.Column="2"
 				IsActive="{Binding Busy}" />
 		</Grid>
-	</Grid>
+    </Grid>
 </Page>

@@ -132,6 +132,7 @@
       <DependentUpon>FamilySelectorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DataContextChangedHelper.cs" />
+    <Compile Include="Helpers\DialogManager.cs" />
     <Compile Include="ParseConfig.cs" />
     <Compile Include="ParseConfig_Keys.cs" />
     <Compile Include="Payments\Models\Payment.cs" />

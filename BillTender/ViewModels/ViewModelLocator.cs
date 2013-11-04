@@ -69,7 +69,11 @@ namespace BillTender.ViewModels
                     if (_accountModel.CurrentUser == null)
                         return null;
 
-                    return new FamilySelectorViewModel(_accountModel.CurrentUser, _familySelection);
+                    FamilySelectorViewModel viewModel = new FamilySelectorViewModel(
+                        _accountModel.CurrentUser,
+                        _familySelection);
+                    viewModel.Load();
+                    return viewModel;
                 });
             }
         }
