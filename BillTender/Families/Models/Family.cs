@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using BillTender.Budget.Models;
 using Parse;
 
@@ -11,6 +7,18 @@ namespace BillTender.Families.Models
     [ParseClassName("Family")]
     public class Family : ParseObject
     {
+        public void AddMember(ParseUser user)
+        {
+            var members = GetRelation<ParseUser>("Members");
+            members.Add(user);
+        }
+
+        public void RemoveMember(ParseUser user)
+        {
+            var members = GetRelation<ParseUser>("Members");
+            members.Remove(user);
+        }
+
         [ParseFieldName("Name")]
         public string Name
         {

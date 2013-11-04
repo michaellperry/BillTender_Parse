@@ -27,7 +27,12 @@ namespace BillTender.Families.ViewModels
         {
             this.Perform(async delegate
             {
-                var families = await _user.GetRelation<Family>("Families").Query.FindAsync();
+                var myFamilies =
+                    from family in new ParseQuery<Family>()
+                    where family["Members"] == _user
+                    select family;
+
+                var families = await myFamilies.FindAsync();
                 var tasks = families.Select(family => family.FetchAsync());
                 await Task.WhenAll(tasks);
                 foreach (var family in families)
@@ -71,11 +76,8 @@ namespace BillTender.Families.ViewModels
                                 {
                                     Perform(async delegate
                                     {
+                                        family.AddMember(_user);
                                         await family.SaveAsync();
-
-                                        ParseRelation<Family> families = _user.GetRelation<Family>("Families");
-                                        families.Add(family);
-                                        await _user.SaveAsync();
 
                                         _familySelection.AddFamily(family);
                                         _familySelection.SelectedFamily = family;
@@ -130,14 +132,14 @@ namespace BillTender.Families.ViewModels
                     .Do(delegate
                     {
                         Family selectedFamily = _familySelection.SelectedFamily;
-                        ParseRelation<Family> families = _user.GetRelation<Family>("Families");
-                        families.Remove(selectedFamily);
+                        selectedFamily.RemoveMember(_user);
+
                         _familySelection.RemoveFamily(selectedFamily);
                         _familySelection.SelectedFamily = _familySelection.Families.FirstOrDefault();
 
                         Perform(async delegate
                         {
-                            await _user.SaveAsync();
+                            await selectedFamily.SaveAsync();
                         });
                     });
             }
