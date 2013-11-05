@@ -10,14 +10,12 @@ using System;
 using UpdateControls.Fields;
 using System.Threading.Tasks;
 using UpdateControls.Collections;
+using BillTender.Helpers;
 
 namespace BillTender.Budget.ViewModels
 {
     public class BudgetViewModel : ProgressViewModel
     {
-        public delegate void BillEditedHandler(object sender, BillEditedEventArgs args);
-        public event BillEditedHandler BillEdited;
-
         private readonly BillTender.Families.Models.Family _family;
 
         private IndependentList<Bill> _bills = new IndependentList<Bill>();
@@ -65,25 +63,20 @@ namespace BillTender.Budget.ViewModels
                 return MakeCommand
                     .Do(delegate
                     {
-                        if (BillEdited != null)
-                        {
-                            var bill = ParseObject.Create<Bill>();
-                            bill.User = _user;
-                            bill.NextDue = DateTime.Today;
-                            BillEditedEventArgs args = new BillEditedEventArgs
+                        var bill = ParseObject.Create<Bill>();
+						bill.User = _user;
+                        bill.NextDue = DateTime.Today;
+                        DialogManager.ShowBillDialog(bill,
+                            completed: delegate
                             {
-                                Bill = bill,
-                                Completed = delegate
+                                Perform(async delegate
                                 {
-                                    Perform(async delegate
-                                    {
-                                        await bill.SaveAsync();
-                                        _bills.Add(bill);
-                                    });
-                                }
-                            };
-                            BillEdited(this, args);
-                        }
+                                    await bill.SaveAsync();
+                                    _family.AddBill(bill);
+                                    await _family.SaveAsync();
+                                    _bills.Add(bill);
+                                });
+                            });
                     });
             }
         }
@@ -96,27 +89,20 @@ namespace BillTender.Budget.ViewModels
                     .When(() => _selectedBill.Value != null)
                     .Do(delegate
                     {
-                        if (BillEdited != null)
-                        {
-                            var args = new BillEditedEventArgs
+                        var bill = _selectedBill.Value;
+                        DialogManager.ShowBillDialog(
+                            bill,
+                            completed: delegate
                             {
-                                Bill = _selectedBill.Value,
-                                Completed = delegate
+                                Perform(async delegate
                                 {
-                                    Perform(async delegate
-                                    {
-                                        await _selectedBill.Value
-                                            .SaveAsync();
-                                    });
-                                },
-                                Cancelled = delegate
-                                {
-                                    _selectedBill.Value
-                                        .Revert();
-                                }
-                            };
-                            BillEdited(this, args);
-                        }
+                                    await bill.SaveAsync();
+                                });
+                            },
+                            cancelled: delegate
+                            {
+                                bill.Revert();
+                            });
                     });
             }
         }

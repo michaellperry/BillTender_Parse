@@ -18,28 +18,6 @@ namespace BillTender.Budget.Views
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            var viewModel = ForView.Unwrap<BudgetViewModel>(DataContext);
-            if (viewModel != null)
-            {
-                viewModel.BillEdited += BillEdited;
-            }
-
-            base.OnNavigatedTo(e);
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            var viewModel = ForView.Unwrap<BudgetViewModel>(DataContext);
-            if (viewModel != null)
-            {
-                viewModel.BillEdited -= BillEdited;
-            }
-
-            base.OnNavigatedFrom(e);
-        }
-
         private void BillEdited(object sender, BillEditedEventArgs args)
         {
             Popup billPopup = new Popup()
