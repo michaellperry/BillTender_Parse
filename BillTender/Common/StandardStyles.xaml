@@ -444,6 +444,21 @@
             Value="&#xE104;" />
     </Style>
 
+    <Style
+        x:Key="PaymentAppBarButtonStyle"
+        TargetType="ButtonBase"
+        BasedOn="{StaticResource AppBarButtonStyle}">
+        <Setter
+            Property="AutomationProperties.AutomationId"
+            Value="PaymentAppBarButton" />
+        <Setter
+            Property="AutomationProperties.Name"
+            Value="Pay Bills" />
+        <Setter
+            Property="Content"
+            Value="$" />
+    </Style>
+
     <!--
     
     <Style x:Key="SkipBackAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">

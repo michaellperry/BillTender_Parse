@@ -122,6 +122,11 @@
     </Compile>
     <Compile Include="ParseConfig.cs" />
     <Compile Include="ParseConfig_Keys.cs" />
+    <Compile Include="Payments\Models\Payment.cs" />
+    <Compile Include="Payments\ViewModels\PaymentViewModel.cs" />
+    <Compile Include="Payments\Views\PaymentPage.xaml.cs">
+      <DependentUpon>PaymentPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\Models\AccountModel.cs" />
     <Compile Include="Settings\Models\SharingLevel.cs" />
@@ -197,6 +202,10 @@
     <Page Include="Common\StandardStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Payments\Views\PaymentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Settings\Views\AccountFlyout.xaml">
       <SubType>Designer</SubType>

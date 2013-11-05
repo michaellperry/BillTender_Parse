@@ -2,6 +2,7 @@
 using BillTender.Settings.ViewModels;
 using UpdateControls.XAML;
 using System;
+using Parse;
 
 namespace BillTender.ViewModels
 {
@@ -63,6 +64,24 @@ namespace BillTender.ViewModels
                         return null;
 
                     return new BillTender.Budget.ViewModels.BudgetViewModel(_accountModel.CurrentUser);
+                });
+            }
+        }
+
+        public object Payment
+        {
+            get
+            {
+                return ViewModel(delegate
+                {
+                    ParseUser currentUser = _accountModel.CurrentUser;
+                    if (currentUser == null)
+                        return null;
+
+                    var viewModel = new BillTender.Payments.ViewModels.PaymentViewModel(
+                        currentUser);
+                    viewModel.Load();
+                    return viewModel;
                 });
             }
         }

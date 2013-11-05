@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Parse;
+using BillTender.Payments.Models;
+using System.Collections.Generic;
 
 namespace BillTender.Budget.Models
 {
@@ -39,6 +41,12 @@ namespace BillTender.Budget.Models
         {
             get { return GetProperty<DateTime>(); }
             set { SetProperty<DateTime>(value); }
+        }
+
+        [ParseFieldName("Payments")]
+        public IList<Payment> Payments
+        {
+            get { return GetProperty<IList<Payment>>(); }
         }
 
         public static bool IsValidFrequency(int value)
