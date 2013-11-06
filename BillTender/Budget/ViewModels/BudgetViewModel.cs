@@ -9,6 +9,7 @@ using UpdateControls.XAML;
 using System;
 using UpdateControls.Fields;
 using System.Threading.Tasks;
+using UpdateControls.Collections;
 
 namespace BillTender.Budget.ViewModels
 {
@@ -19,7 +20,7 @@ namespace BillTender.Budget.ViewModels
 
         private readonly ParseUser _user;
 
-        private Independent _bills = new Independent();
+        private IndependentList<Bill> _bills = new IndependentList<Bill>();
         private Independent<Bill> _selectedBill = new Independent<Bill>();
 
         public BudgetViewModel(ParseUser user)
@@ -27,19 +28,27 @@ namespace BillTender.Budget.ViewModels
             _user = user;
         }
 
+        public void Load()
+        {
+            Perform(async delegate
+            {
+                //var query = new ParseQuery<Bill>()
+                //    .Where(bill => bill.User == _user);
+                var query =
+                    from bill in new ParseQuery<Bill>()
+                    where bill.User == _user
+                    select bill;
+                var results = await query.FindAsync();
+                foreach (var bill in results)
+                    _bills.Add(bill);
+            });
+        }
+
         public IEnumerable<Bill> Bills
         {
             get
             {
-                _bills.OnGet();
-                IList<Bill> bills = _user.Get<IList<Bill>>("Bills");
-                Perform(async delegate
-                {
-                    var tasks = bills
-                        .Select(bill => bill.FetchAsync());
-                    await Task.WhenAll(tasks);
-                });
-                return bills;
+                return _bills;
             }
         }
 
@@ -59,6 +68,7 @@ namespace BillTender.Budget.ViewModels
                         if (BillEdited != null)
                         {
                             var bill = ParseObject.Create<Bill>();
+                            bill.User = _user;
                             bill.NextDue = DateTime.Today;
                             BillEditedEventArgs args = new BillEditedEventArgs
                             {
@@ -68,9 +78,7 @@ namespace BillTender.Budget.ViewModels
                                     Perform(async delegate
                                     {
                                         await bill.SaveAsync();
-                                        _user.AddToList("Bills", bill);
-                                        await _user.SaveAsync();
-                                        _bills.OnSet();
+                                        _bills.Add(bill);
                                     });
                                 }
                             };

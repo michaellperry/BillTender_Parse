@@ -9,6 +9,13 @@ namespace BillTender.Budget.Models
     [ParseClassName("Bill")]
     public class Bill : ParseObject
     {
+        [ParseFieldName("User")]
+        public ParseUser User
+        {
+            get { return GetProperty<ParseUser>(); }
+            set { SetProperty<ParseUser>(value); }
+        }
+
         [ParseFieldName("Payee")]
         public string Payee
         {

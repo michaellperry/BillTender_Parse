@@ -3,6 +3,8 @@ using BillTender.Settings.ViewModels;
 using UpdateControls.XAML;
 using System;
 using Parse;
+using BillTender.Payments.ViewModels;
+using BillTender.Budget.ViewModels;
 
 namespace BillTender.ViewModels
 {
@@ -63,7 +65,9 @@ namespace BillTender.ViewModels
                     if (_accountModel.CurrentUser == null)
                         return null;
 
-                    return new BillTender.Budget.ViewModels.BudgetViewModel(_accountModel.CurrentUser);
+                    BudgetViewModel viewModel = new BudgetViewModel(_accountModel.CurrentUser);
+                    viewModel.Load();
+                    return viewModel;
                 });
             }
         }
@@ -78,8 +82,7 @@ namespace BillTender.ViewModels
                     if (currentUser == null)
                         return null;
 
-                    var viewModel = new BillTender.Payments.ViewModels.PaymentViewModel(
-                        currentUser);
+                    var viewModel = new PaymentViewModel(currentUser);
                     viewModel.Load();
                     return viewModel;
                 });
