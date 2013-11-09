@@ -70,4 +70,15 @@
                 IsActive="{Binding Busy}" />
         </Grid>
     </Grid>
+    <Page.BottomAppBar>
+        <AppBar>
+            <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Right">
+                <Button
+                    Style="{StaticResource RefreshAppBarButtonStyle}"
+                    Command="{Binding Refresh}" />
+            </StackPanel>
+        </AppBar>
+    </Page.BottomAppBar>
 </Page>

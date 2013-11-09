@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 using BillTender.Budget.Models;
 using BillTender.Families.Models;
 using BillTender.ViewModels;
 using Parse;
 using UpdateControls.Collections;
+using UpdateControls.XAML;
 
 namespace BillTender.Payments.ViewModels
 {
@@ -21,6 +23,7 @@ namespace BillTender.Payments.ViewModels
 
         public void Load()
         {
+            _bills.Clear();
             Perform(async delegate
             {
                 //var query = new ParseQuery<Family>()
@@ -52,6 +55,18 @@ namespace BillTender.Payments.ViewModels
         public IEnumerable<Bill> Bills
         {
             get { return _bills; }
+        }
+
+        public ICommand Refresh
+        {
+            get
+            {
+                return MakeCommand
+                    .Do(delegate
+                    {
+                        Load();
+                    });
+            }
         }
     }
 }
