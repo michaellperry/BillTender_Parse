@@ -9,6 +9,7 @@ namespace BillTender
         {
             ParseObject.RegisterSubclass<BillTender.Budget.Models.Bill>();
             ParseObject.RegisterSubclass<BillTender.Families.Models.Family>();
+            ParseObject.RegisterSubclass<BillTender.Families.Models.Member>();
 
             var config = new ParseConfig();
             config.InitializeParse();

@@ -24,6 +24,18 @@ namespace BillTender.Families.ViewModels
             _familySelection.ClearFamilies();
             this.Perform(async delegate
             {
+                var members =
+                    from member in new ParseQuery<Member>()
+                    where member.User == _user
+                    select member;
+                var results = await members
+                    .Include("Family")
+                    .FindAsync();
+
+                foreach (var member in results)
+                    _familySelection.AddFamily(member.Family);
+                _familySelection.SelectedFamily =
+                    _familySelection.Families.FirstOrDefault();
             });
         }
 
@@ -53,6 +65,13 @@ namespace BillTender.Families.ViewModels
                             {
                                 Perform(async delegate
                                 {
+                                    Member member = ParseObject.Create<Member>();
+                                    member.User = _user;
+                                    member.Family = family;
+                                    await member.SaveAsync();
+
+                                    _familySelection.AddFamily(family);
+                                    _familySelection.SelectedFamily = family;
                                 });
                             });
                     });
@@ -96,6 +115,22 @@ namespace BillTender.Families.ViewModels
                     {
                         Perform(async delegate
                         {
+                            Family selectedFamily = _familySelection.SelectedFamily;
+
+                            var query =
+                                from member in new ParseQuery<Member>()
+                                where member.User == _user &&
+                                    member.Family == selectedFamily
+                                select member;
+                            var selectedMember = await query.FirstOrDefaultAsync();
+                            if (selectedMember != null)
+                            {
+                                await selectedMember.DeleteAsync();
+                            }
+
+                            _familySelection.RemoveFamily(selectedFamily);
+                            _familySelection.SelectedFamily =
+                                _familySelection.Families.FirstOrDefault();
                         });
                     });
             }
