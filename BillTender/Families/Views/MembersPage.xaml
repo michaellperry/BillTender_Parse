@@ -68,6 +68,11 @@
                 IsActive="{Binding Busy}" />
         </Grid>
     </Grid>
+    <Page.TopAppBar>
+        <AppBar>
+            <local:FamilySelectorView />
+        </AppBar>
+    </Page.TopAppBar>
     <Page.BottomAppBar>
         <AppBar>
             <StackPanel
