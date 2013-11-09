@@ -137,6 +137,9 @@
     <Compile Include="ParseConfig_Keys.cs" />
     <Compile Include="Payments\Models\Payment.cs" />
     <Compile Include="Payments\ViewModels\PaymentViewModel.cs" />
+    <Compile Include="Payments\Views\BillControl.xaml.cs">
+      <DependentUpon>BillControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Payments\Views\PaymentPage.xaml.cs">
       <DependentUpon>PaymentPage.xaml</DependentUpon>
     </Compile>
@@ -215,6 +218,10 @@
     <Page Include="Common\StandardStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Payments\Views\BillControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Payments\Views\PaymentPage.xaml">
       <Generator>MSBuild:Compile</Generator>

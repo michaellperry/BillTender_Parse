@@ -33,7 +33,8 @@ namespace BillTender.Payments.ViewModels
                 //        bill => bill.Family,
                 //        (family, bill) => bill)
                 //    .Where(bill => bill.NextDue < new DateTime(2013, 9, 26))
-                //    .OrderByDescending(bill => bill.NextDue);
+                //    .OrderBy(bill => bill.NextDue)
+                //    .ThenBy(bill => bill.Payee);
                 var bills =
                     from family in new ParseQuery<Family>()
                         .WhereEqualTo("Members", _user)
@@ -43,10 +44,10 @@ namespace BillTender.Payments.ViewModels
                 var query =
                     from bill in bills
                     where bill.NextDue < new DateTime(2013, 9, 26)
-                    orderby bill.NextDue descending
+                    orderby bill.NextDue, bill.Payee
                     select bill;
 
-                var results = await query.FindAsync();
+                var results = await query.Include("Family").FindAsync();
                 foreach (var bill in results)
                     _bills.Add(bill);
             });
