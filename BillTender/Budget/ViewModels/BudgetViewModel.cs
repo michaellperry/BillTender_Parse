@@ -66,8 +66,7 @@ namespace BillTender.Budget.ViewModels
                                 Perform(async delegate
                                 {
                                     await bill.SaveAsync();
-                                    _family.AddBill(bill);
-                                    await _family.SaveAsync();
+
                                     _bills.Add(bill);
                                 });
                             });
