@@ -26,30 +26,21 @@ namespace BillTender.Payments.ViewModels
             _bills.Clear();
             Perform(async delegate
             {
-                //var query = new ParseQuery<Family>()
-                //    .WhereEqualTo("Members", _user)
-                //    .Join(new ParseQuery<Bill>(),
-                //        family => family,
-                //        bill => bill.Family,
-                //        (family, bill) => bill)
-                //    .Where(bill => bill.NextDue < new DateTime(2013, 9, 26))
-                //    .OrderBy(bill => bill.NextDue)
-                //    .ThenBy(bill => bill.Payee);
-                var bills =
-                    from family in new ParseQuery<Family>()
-                        .WhereEqualTo("Members", _user)
-                    join bill in new ParseQuery<Bill>()
-                        on family equals bill.Family
-                    select bill;
-                var query =
-                    from bill in bills
-                    where bill.NextDue < new DateTime(2013, 9, 26)
-                    orderby bill.NextDue, bill.Payee
-                    select bill;
+                //var bills =
+                //    from user in new ParseQuery<ParseUser>()
+                //    where user.ObjectId == _user.ObjectId
+                //    join bill in new ParseQuery<Bill>()
+                //        on user equals bill.User
+                //    select bill;
+                //var query =
+                //    from bill in bills
+                //    where bill.NextDue < new DateTime(2013, 9, 26)
+                //    orderby bill.NextDue, bill.Payee
+                //    select bill;
 
-                var results = await query.Include("Family").FindAsync();
-                foreach (var bill in results)
-                    _bills.Add(bill);
+                //var results = await query.FindAsync();
+                //foreach (var bill in results)
+                //    _bills.Add(bill);
             });
         }
 

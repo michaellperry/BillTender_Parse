@@ -24,11 +24,6 @@ namespace BillTender.Families.ViewModels
             _members.Clear();
             Perform(async delegate
             {
-                var members = await _family.Members.Query
-                    .FindAsync();
-
-                foreach (var member in members)
-                    _members.Add(member);
             });
         }
 

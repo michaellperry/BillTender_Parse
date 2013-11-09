@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using UpdateControls.Collections;
 using UpdateControls.Fields;
+using BillTender.Families.Models;
+using System;
+using System.Linq;
 
 namespace BillTender.Families.Models
 {
@@ -18,6 +21,13 @@ namespace BillTender.Families.Models
         {
             get { return _selectedFamily; }
             set { _selectedFamily.Value = value; }
+        }
+
+        public void AddFamilies(IEnumerable<Family> families)
+        {
+            foreach (var family in families)
+                _families.Add(family);
+            SelectedFamily = families.FirstOrDefault();
         }
 
         public void ClearFamilies()

@@ -1,17 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using BillTender.Families.Models;
-using BillTender.Families.Views;
 using BillTender.Helpers;
 using BillTender.ViewModels;
 using Parse;
 using UpdateControls.XAML;
-using Windows.UI;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 
 namespace BillTender.Families.ViewModels
 {
@@ -31,29 +24,12 @@ namespace BillTender.Families.ViewModels
             _familySelection.ClearFamilies();
             this.Perform(async delegate
             {
-                var myFamilies =
-                    from family in new ParseQuery<Family>()
-                    where family["Members"] == _user
-                    select family;
-
-                var families = await myFamilies.FindAsync();
-                var tasks = families.Select(family => family.FetchAsync());
-                await Task.WhenAll(tasks);
-                foreach (var family in families)
-                    _familySelection.AddFamily(family);
-                _familySelection.SelectedFamily = families.FirstOrDefault();
             });
         }
 
         public IEnumerable<Family> Families
         {
-            get
-            {
-                return
-                    from family in _familySelection.Families
-                    orderby family.Name
-                    select family;
-            }
+            get { return _familySelection.Families; }
         }
 
         public Family SelectedFamily
@@ -77,11 +53,6 @@ namespace BillTender.Families.ViewModels
                             {
                                 Perform(async delegate
                                 {
-                                    family.AddMember(_user);
-                                    await family.SaveAsync();
-
-                                    _familySelection.AddFamily(family);
-                                    _familySelection.SelectedFamily = family;
                                 });
                             });
                     });
@@ -123,15 +94,8 @@ namespace BillTender.Families.ViewModels
                     .When(() => _familySelection.SelectedFamily != null)
                     .Do(delegate
                     {
-                        Family selectedFamily = _familySelection.SelectedFamily;
-                        selectedFamily.RemoveMember(_user);
-
-                        _familySelection.RemoveFamily(selectedFamily);
-                        _familySelection.SelectedFamily = _familySelection.Families.FirstOrDefault();
-
                         Perform(async delegate
                         {
-                            await selectedFamily.SaveAsync();
                         });
                     });
             }
