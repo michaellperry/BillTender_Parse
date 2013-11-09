@@ -1,12 +1,11 @@
-﻿using BillTender.Settings.Models;
-using BillTender.Settings.ViewModels;
-using UpdateControls.XAML;
-using System;
-using Parse;
-using BillTender.Payments.ViewModels;
-using BillTender.Budget.ViewModels;
-using BillTender.Families.ViewModels;
+﻿using BillTender.Budget.ViewModels;
 using BillTender.Families.Models;
+using BillTender.Families.ViewModels;
+using BillTender.Payments.ViewModels;
+using BillTender.Settings.Models;
+using BillTender.Settings.ViewModels;
+using Parse;
+using UpdateControls.XAML;
 
 namespace BillTender.ViewModels
 {
@@ -87,7 +86,7 @@ namespace BillTender.ViewModels
                     if (_familySelection.SelectedFamily == null)
                         return null;
 
-                    BudgetViewModel viewModel = new BudgetViewModel(_accountModel.CurrentUser);
+                    BudgetViewModel viewModel = new BudgetViewModel(_familySelection.SelectedFamily);
                     viewModel.Load();
                     return viewModel;
                 });

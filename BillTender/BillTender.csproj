@@ -217,6 +217,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Payments\Views\PaymentPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Families\Views\FamilyDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

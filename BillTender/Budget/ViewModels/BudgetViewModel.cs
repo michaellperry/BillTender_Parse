@@ -1,16 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 using BillTender.Budget.Models;
+using BillTender.Helpers;
 using BillTender.ViewModels;
 using Parse;
-using UpdateControls;
-using UpdateControls.XAML;
-using System;
-using UpdateControls.Fields;
-using System.Threading.Tasks;
 using UpdateControls.Collections;
-using BillTender.Helpers;
+using UpdateControls.Fields;
+using UpdateControls.XAML;
 
 namespace BillTender.Budget.ViewModels
 {
@@ -31,10 +28,10 @@ namespace BillTender.Budget.ViewModels
             Perform(async delegate
             {
                 //var query = new ParseQuery<Bill>()
-                //    .Where(bill => bill.User == _user);
+                //    .Where(bill => bill.Family == _family);
                 var query =
                     from bill in new ParseQuery<Bill>()
-                    where bill.User == _user
+                    where bill.Family == _family
                     select bill;
                 var results = await query.FindAsync();
                 foreach (var bill in results)
@@ -44,10 +41,7 @@ namespace BillTender.Budget.ViewModels
 
         public IEnumerable<Bill> Bills
         {
-            get
-            {
-                return _bills;
-            }
+            get { return _bills; }
         }
 
         public Bill SelectedBill
@@ -64,7 +58,7 @@ namespace BillTender.Budget.ViewModels
                     .Do(delegate
                     {
                         var bill = ParseObject.Create<Bill>();
-						bill.User = _user;
+						bill.Family = _family;
                         bill.NextDue = DateTime.Today;
                         DialogManager.ShowBillDialog(bill,
                             completed: delegate

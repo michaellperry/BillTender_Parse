@@ -9,14 +9,17 @@ namespace BillTender.Families.Models
     {
         public void AddMember(ParseUser user)
         {
-            var members = GetRelation<ParseUser>("Members");
-            members.Add(user);
+            Members.Add(user);
         }
 
         public void RemoveMember(ParseUser user)
         {
-            var members = GetRelation<ParseUser>("Members");
-            members.Remove(user);
+            Members.Remove(user);
+        }
+
+        public ParseRelation<ParseUser> Members
+        {
+            get { return GetRelation<ParseUser>("Members"); }
         }
 
         [ParseFieldName("Name")]

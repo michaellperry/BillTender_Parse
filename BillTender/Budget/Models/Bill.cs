@@ -3,17 +3,18 @@ using System.Linq;
 using Parse;
 using BillTender.Payments.Models;
 using System.Collections.Generic;
+using BillTender.Families.Models;
 
 namespace BillTender.Budget.Models
 {
     [ParseClassName("Bill")]
     public class Bill : ParseObject
     {
-        [ParseFieldName("User")]
-        public ParseUser User
+        [ParseFieldName("Family")]
+        public Family Family
         {
-            get { return GetProperty<ParseUser>(); }
-            set { SetProperty<ParseUser>(value); }
+            get { return GetProperty<Family>(); }
+            set { SetProperty<Family>(value); }
         }
 
         [ParseFieldName("Payee")]
