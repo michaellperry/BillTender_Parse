@@ -125,11 +125,18 @@
     <Compile Include="Families\ViewModels\FamilyEditedEventArgs.cs" />
     <Compile Include="Families\ViewModels\FamilySelectorDesignDataModel.cs" />
     <Compile Include="Families\ViewModels\FamilySelectorViewModel.cs" />
+    <Compile Include="Families\ViewModels\MembersViewModel.cs" />
     <Compile Include="Families\Views\FamilyDialog.xaml.cs">
       <DependentUpon>FamilyDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Families\Views\FamilySelectorView.xaml.cs">
       <DependentUpon>FamilySelectorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Families\Views\MemberControl.xaml.cs">
+      <DependentUpon>MemberControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Families\Views\MembersPage.xaml.cs">
+      <DependentUpon>MembersPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DataContextChangedHelper.cs" />
     <Compile Include="Helpers\DialogManager.cs" />
@@ -218,6 +225,14 @@
     <Page Include="Common\StandardStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Families\Views\MemberControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Families\Views\MembersPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Payments\Views\BillControl.xaml">
       <SubType>Designer</SubType>

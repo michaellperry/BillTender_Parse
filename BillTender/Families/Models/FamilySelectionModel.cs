@@ -20,6 +20,11 @@ namespace BillTender.Families.Models
             set { _selectedFamily.Value = value; }
         }
 
+        public void ClearFamilies()
+        {
+            _families.Clear();
+        }
+
         public void AddFamily(Family family)
         {
             _families.Add(family);

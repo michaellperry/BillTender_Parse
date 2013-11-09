@@ -109,5 +109,22 @@ namespace BillTender.ViewModels
                 });
             }
         }
+
+        public object Members
+        {
+            get
+            {
+                return ViewModel(delegate
+                {
+                    Family family = _familySelection.SelectedFamily;
+                    if (family == null)
+                        return null;
+
+                    var viewModel = new MembersViewModel(family);
+                    viewModel.Load();
+                    return viewModel;
+                });
+            }
+        }
     }
 }

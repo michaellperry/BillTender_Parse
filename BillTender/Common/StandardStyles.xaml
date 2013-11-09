@@ -519,6 +519,21 @@
             Value="&#xE117;" />
     </Style>
 
+    <Style
+        x:Key="MembersAppBarButtonStyle"
+        TargetType="ButtonBase"
+        BasedOn="{StaticResource AppBarButtonStyle}">
+        <Setter
+            Property="AutomationProperties.AutomationId"
+            Value="MembersAppBarButton" />
+        <Setter
+            Property="AutomationProperties.Name"
+            Value="Members" />
+        <Setter
+            Property="Content"
+            Value="&#xE125;" />
+    </Style>
+
     <!--
     
     <Style x:Key="SkipBackAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">

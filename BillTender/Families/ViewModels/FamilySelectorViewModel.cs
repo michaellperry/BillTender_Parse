@@ -28,6 +28,7 @@ namespace BillTender.Families.ViewModels
 
         public void Load()
         {
+            _familySelection.ClearFamilies();
             this.Perform(async delegate
             {
                 var myFamilies =

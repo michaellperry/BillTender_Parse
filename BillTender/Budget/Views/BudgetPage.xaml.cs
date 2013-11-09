@@ -1,13 +1,7 @@
-﻿using BillTender.Budget.ViewModels;
-using UpdateControls.XAML;
+﻿using BillTender.Families.Views;
+using BillTender.Payments.Views;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
-using BillTender.Payments.Views;
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace BillTender.Budget.Views
 {
@@ -18,37 +12,14 @@ namespace BillTender.Budget.Views
             this.InitializeComponent();
         }
 
-        private void BillEdited(object sender, BillEditedEventArgs args)
-        {
-            Popup billPopup = new Popup()
-            {
-                ChildTransitions = new TransitionCollection { new PopupThemeTransition() }
-            };
-            BillDetailView detail = new BillDetailView()
-            {
-                Width = Window.Current.Bounds.Width,
-                Height = Window.Current.Bounds.Height,
-                DataContext = args.Bill
-            };
-            detail.Ok += delegate
-            {
-                billPopup.IsOpen = false;
-                if (args.Completed != null)
-                    args.Completed();
-            };
-            detail.Cancel += delegate
-            {
-                billPopup.IsOpen = false;
-                if (args.Cancelled != null)
-                    args.Cancelled();
-            };
-            billPopup.Child = detail;
-            billPopup.IsOpen = true;
-        }
-
         private void Payment_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(PaymentPage));
+        }
+
+        private void Members_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MembersPage));
         }
     }
 }

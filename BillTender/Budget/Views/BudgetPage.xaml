@@ -29,6 +29,9 @@
                     <Button
                         Style="{StaticResource PaymentAppBarButtonStyle}"
                         Click="Payment_Click"/>
+                    <Button
+                        Style="{StaticResource MembersAppBarButtonStyle}"
+                        Click="Members_Click" />
                 </StackPanel>
                     
                 <StackPanel
