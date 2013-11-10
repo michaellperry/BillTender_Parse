@@ -18,5 +18,12 @@ namespace BillTender.Families.Models
             get { return GetProperty<Family>(); }
             set { SetProperty<Family>(value); }
         }
+
+        [ParseFieldName("Role")]
+        public string Role
+        {
+            get { return GetProperty<string>(); }
+            set { SetProperty<string>(); }
+        }
     }
 }
