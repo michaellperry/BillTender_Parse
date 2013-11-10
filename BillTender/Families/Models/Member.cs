@@ -23,7 +23,7 @@ namespace BillTender.Families.Models
         public string Role
         {
             get { return GetProperty<string>(); }
-            set { SetProperty<string>(); }
+            set { SetProperty<string>(value); }
         }
     }
 }
