@@ -25,7 +25,26 @@ namespace BillTender.Families.ViewModels
             _familySelection.ClearFamilies();
             this.Perform(async delegate
             {
-                // TODO
+                // Using a ParseQuery:
+
+                var query =
+                    from family in new ParseQuery<Family>()
+                    where family["Members"] == _user
+                    select family;
+                var families = await query.FindAsync();
+
+                // Or, using a join table:
+                //
+                //var members =
+                //    from member in new ParseQuery<Member>()
+                //    where member.User == _user
+                //    select member;
+                //var results = await members
+                //    .Include("Family")
+                //    .FindAsync();
+                //var families = results.Select(member => member.Family);
+
+                _familySelection.AddFamilies(families);
             });
         }
 
@@ -55,7 +74,18 @@ namespace BillTender.Families.ViewModels
                             {
                                 Perform(async delegate
                                 {
-                                    // TODO
+                                    // Using a ParseQuery:
+
+                                    family.Members.Add(_user);
+                                    await family.SaveAsync();
+
+                                    // Or, using a join table:
+                                    //
+                                    //await family.SaveAsync();
+                                    //var member = ParseObject.Create<Member>();
+                                    //member.User = _user;
+                                    //member.Family = family;
+                                    //await member.SaveAsync();
 
                                     _familySelection.AddFamily(family);
                                     _familySelection.SelectedFamily = family;
@@ -104,7 +134,21 @@ namespace BillTender.Families.ViewModels
                         {
                             Family selectedFamily = _familySelection.SelectedFamily;
 
-                            // TODO
+                            // Using a ParseRelation:
+
+                            selectedFamily.Members.Remove(_user);
+                            await selectedFamily.SaveAsync();
+
+                            // Or, using a join table:
+                            //
+                            //var query =
+                            //    from member in new ParseQuery<Member>()
+                            //    where member.User == _user &&
+                            //        member.Family == selectedFamily
+                            //    select member;
+                            //var selectedMember = await query.FirstOrDefaultAsync();
+                            //if (selectedMember != null)
+                            //    await selectedMember.DeleteAsync();
 
                             _familySelection.RemoveFamily(selectedFamily);
                             _familySelection.SelectedFamily =
