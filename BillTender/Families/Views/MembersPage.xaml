@@ -26,6 +26,7 @@
             </Grid.RowDefinitions>
             <ListView
                 ItemsSource="{Binding Members}"
+                SelectedItem="{Binding SelectedMember, Mode=TwoWay}"
                 Grid.Row="1"
                 Grid.Column="1"
                 Margin="10">

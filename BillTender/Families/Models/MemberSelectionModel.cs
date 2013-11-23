@@ -24,6 +24,20 @@ namespace BillTender.Families.Models
             _members.Clear();
         }
 
+        public void Add(ParseUser member)
+        {
+            var match = _members.FirstOrDefault(u => u.ObjectId == member.ObjectId);
+            if (match != null)
+            {
+                SelectedMember = match;
+            }
+            else
+            {
+                _members.Add(member);
+                SelectedMember = member;
+            }
+        }
+
         public void AddRange(IEnumerable<ParseUser> members)
         {
             foreach (var member in members)

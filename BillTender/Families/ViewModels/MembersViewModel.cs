@@ -6,6 +6,7 @@ using BillTender.ViewModels;
 using Parse;
 using UpdateControls.Collections;
 using UpdateControls.XAML;
+using System;
 
 namespace BillTender.Families.ViewModels
 {
@@ -35,6 +36,12 @@ namespace BillTender.Families.ViewModels
             get { return _memberSelection.Members; }
         }
 
+        public ParseUser SelectedMember
+        {
+            get { return _memberSelection.SelectedMember; }
+            set { _memberSelection.SelectedMember = value; }
+        }
+
         public ICommand AddMember
         {
             get
@@ -48,6 +55,20 @@ namespace BillTender.Families.ViewModels
                             delegate
                             {
                                 // TODO
+
+                                Perform(async delegate
+                                {
+                                    var selectedUser = await new ParseQuery<ParseUser>()
+                                        .Where(u => u.Email == invitation.EmailAddress)
+                                        .FirstOrDefaultAsync();
+
+                                    if (selectedUser == null)
+                                        this.LastError = String.Format(
+                                            "User with email {0} not found",
+                                            invitation.EmailAddress);
+                                    else
+                                        _memberSelection.Add(selectedUser);
+                                });
                             });
                     });
             }

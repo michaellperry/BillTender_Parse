@@ -12,6 +12,7 @@ namespace BillTender.ViewModels
         public string LastError
         {
             get { return _lastError; }
+            set { _lastError.Value = value; }
         }
 
         public bool Busy

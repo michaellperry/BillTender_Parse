@@ -11,11 +11,11 @@
     
     <StackPanel>
         <TextBlock
-            Text="michaellperry"
+            Text="{Binding Username}"
             FontSize="24"
             Margin="5" />
         <TextBlock
-            Text="michael@qedcode.com"
+            Text="{Binding Email}"
             FontSize="16"
             Margin="5" />
     </StackPanel>
