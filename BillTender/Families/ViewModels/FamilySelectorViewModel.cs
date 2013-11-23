@@ -25,24 +25,11 @@ namespace BillTender.Families.ViewModels
             _familySelection.ClearFamilies();
             this.Perform(async delegate
             {
-                // Using a ParseQuery:
-
                 var query =
                     from family in new ParseQuery<Family>()
                     where family["Members"] == _user
                     select family;
                 var families = await query.FindAsync();
-
-                // Or, using a join table:
-                //
-                //var members =
-                //    from member in new ParseQuery<Member>()
-                //    where member.User == _user
-                //    select member;
-                //var results = await members
-                //    .Include("Family")
-                //    .FindAsync();
-                //var families = results.Select(member => member.Family);
 
                 _familySelection.AddFamilies(families);
             });
@@ -74,18 +61,12 @@ namespace BillTender.Families.ViewModels
                             {
                                 Perform(async delegate
                                 {
-                                    // Using a ParseQuery:
-
                                     family.Members.Add(_user);
+                                    if (family.ACL == null)
+                                        family.ACL = new ParseACL();
+                                    family.ACL.SetReadAccess(_user, true);
+                                    family.ACL.SetWriteAccess(_user, true);
                                     await family.SaveAsync();
-
-                                    // Or, using a join table:
-                                    //
-                                    //await family.SaveAsync();
-                                    //var member = ParseObject.Create<Member>();
-                                    //member.User = _user;
-                                    //member.Family = family;
-                                    //await member.SaveAsync();
 
                                     _familySelection.AddFamily(family);
                                     _familySelection.SelectedFamily = family;
@@ -134,21 +115,12 @@ namespace BillTender.Families.ViewModels
                         {
                             Family selectedFamily = _familySelection.SelectedFamily;
 
-                            // Using a ParseRelation:
-
                             selectedFamily.Members.Remove(_user);
+                            if (selectedFamily.ACL == null)
+                                selectedFamily.ACL = new ParseACL();
+                            selectedFamily.ACL.SetReadAccess(_user, false);
+                            selectedFamily.ACL.SetWriteAccess(_user, false);
                             await selectedFamily.SaveAsync();
-
-                            // Or, using a join table:
-                            //
-                            //var query =
-                            //    from member in new ParseQuery<Member>()
-                            //    where member.User == _user &&
-                            //        member.Family == selectedFamily
-                            //    select member;
-                            //var selectedMember = await query.FirstOrDefaultAsync();
-                            //if (selectedMember != null)
-                            //    await selectedMember.DeleteAsync();
 
                             _familySelection.RemoveFamily(selectedFamily);
                             _familySelection.SelectedFamily =

@@ -14,5 +14,11 @@ namespace BillTender.Families.Views
         {
             Frame.GoBack();
         }
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            TopAppBar.IsOpen = false;
+            BottomAppBar.IsOpen = false;
+        }
     }
 }

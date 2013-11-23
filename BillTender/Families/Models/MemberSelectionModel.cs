@@ -24,17 +24,19 @@ namespace BillTender.Families.Models
             _members.Clear();
         }
 
-        public void Add(ParseUser member)
+        public bool Add(ParseUser member)
         {
             var match = _members.FirstOrDefault(u => u.ObjectId == member.ObjectId);
             if (match != null)
             {
                 SelectedMember = match;
+                return false;
             }
             else
             {
                 _members.Add(member);
                 SelectedMember = member;
+                return true;
             }
         }
 

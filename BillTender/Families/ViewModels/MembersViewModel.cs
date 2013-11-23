@@ -54,20 +54,28 @@ namespace BillTender.Families.ViewModels
                             invitation,
                             delegate
                             {
-                                // TODO
-
                                 Perform(async delegate
                                 {
+                                    // TODO
+
                                     var selectedUser = await new ParseQuery<ParseUser>()
                                         .Where(u => u.Email == invitation.EmailAddress)
                                         .FirstOrDefaultAsync();
 
                                     if (selectedUser == null)
-                                        this.LastError = String.Format(
-                                            "User with email {0} not found",
-                                            invitation.EmailAddress);
+                                        this.LastError = "User not found";
                                     else
-                                        _memberSelection.Add(selectedUser);
+                                    {
+                                        if (_memberSelection.Add(selectedUser))
+                                        {
+                                            _family.Members.Add(selectedUser);
+                                            if (_family.ACL == null)
+                                                _family.ACL = new ParseACL();
+                                            _family.ACL.SetReadAccess(selectedUser, true);
+                                            _family.ACL.SetWriteAccess(selectedUser, true);
+                                            await _family.SaveAsync();
+                                        }
+                                    }
                                 });
                             });
                     });
@@ -82,10 +90,21 @@ namespace BillTender.Families.ViewModels
                     .When(() => _memberSelection.SelectedMember != null)
                     .Do(delegate
                     {
-                        // TODO
+                        Perform(async delegate
+                        {
+                            ParseUser selectedUser = _memberSelection.SelectedMember;
+                            // TODO
 
-                        _memberSelection.Remove(_memberSelection.SelectedMember);
-                        _memberSelection.SelectedMember = null;
+                            _family.Members.Remove(selectedUser);
+                            if (_family.ACL == null)
+                                _family.ACL = new ParseACL();
+                            _family.ACL.SetReadAccess(selectedUser, false);
+                            _family.ACL.SetWriteAccess(selectedUser, false);
+                            await _family.SaveAsync();
+
+                            _memberSelection.Remove(selectedUser);
+                            _memberSelection.SelectedMember = null;
+                        });
                     });
             }
         }

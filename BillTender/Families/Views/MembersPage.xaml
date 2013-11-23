@@ -81,13 +81,16 @@
                 HorizontalAlignment="Right">
                 <Button
                     Style="{StaticResource AddMemberAppBarButtonStyle}"
-                    Command="{Binding AddMember}" />
+                    Command="{Binding AddMember}"
+                    Click="AppBarButton_Click" />
                 <Button
                     Style="{StaticResource RemoveMemberAppBarButtonStyle}"
-                    Command="{Binding RemoveMember}" />
+                    Command="{Binding RemoveMember}"
+                    Click="AppBarButton_Click" />
                 <Button
                     Style="{StaticResource RefreshAppBarButtonStyle}"
-                    Command="{Binding Refresh}" />
+                    Command="{Binding Refresh}"
+                    Click="AppBarButton_Click" />
             </StackPanel>
         </AppBar>
     </Page.BottomAppBar>
