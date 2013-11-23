@@ -23,13 +23,26 @@ namespace BillTender.Families.ViewModels
         public void Load()
         {
             _familySelection.ClearFamilies();
-            this.Perform(async delegate
+            Perform(async delegate
             {
-                var query =
-                    from family in new ParseQuery<Family>()
-                    where family["Members"] == _user
+                var roles =
+                    from role in new ParseQuery<ParseRole>()
+                    where role["users"] == _user
+                    select role;
+                var writable =
+                    from writer in roles
+                    join family in new ParseQuery<Family>()
+                        on writer equals family.Writers
                     select family;
-                var families = await query.FindAsync();
+                var readable =
+                    from reader in roles
+                    join family in new ParseQuery<Family>()
+                        on reader equals family.Readers
+                    select family;
+                var families = await writable.Or(readable)
+                    .Include("Readers")
+                    .Include("Writers")
+                    .FindAsync();
 
                 _familySelection.AddFamilies(families);
             });
@@ -61,11 +74,9 @@ namespace BillTender.Families.ViewModels
                             {
                                 Perform(async delegate
                                 {
-                                    family.Members.Add(_user);
-                                    if (family.ACL == null)
-                                        family.ACL = new ParseACL();
-                                    family.ACL.SetReadAccess(_user, true);
-                                    family.ACL.SetWriteAccess(_user, true);
+                                    await family.SaveAsync();
+                                    family.Initialize();
+                                    family.Writers.Users.Add(_user);
                                     await family.SaveAsync();
 
                                     _familySelection.AddFamily(family);
@@ -115,11 +126,8 @@ namespace BillTender.Families.ViewModels
                         {
                             Family selectedFamily = _familySelection.SelectedFamily;
 
-                            selectedFamily.Members.Remove(_user);
-                            if (selectedFamily.ACL == null)
-                                selectedFamily.ACL = new ParseACL();
-                            selectedFamily.ACL.SetReadAccess(_user, false);
-                            selectedFamily.ACL.SetWriteAccess(_user, false);
+                            selectedFamily.Readers.Users.Remove(_user);
+                            selectedFamily.Writers.Users.Remove(_user);
                             await selectedFamily.SaveAsync();
 
                             _familySelection.RemoveFamily(selectedFamily);

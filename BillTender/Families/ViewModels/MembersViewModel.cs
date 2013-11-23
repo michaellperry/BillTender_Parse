@@ -7,6 +7,7 @@ using Parse;
 using UpdateControls.Collections;
 using UpdateControls.XAML;
 using System;
+using System.Linq;
 
 namespace BillTender.Families.ViewModels
 {
@@ -26,7 +27,10 @@ namespace BillTender.Families.ViewModels
             _memberSelection.Clear();
             Perform(async delegate
             {
-                var members = await _family.Members.Query.FindAsync();
+                var members = await
+                    _family.Readers.Users.Query
+                    .Or(_family.Writers.Users.Query)
+                    .FindAsync();
                 _memberSelection.AddRange(members);
             });
         }
@@ -68,11 +72,7 @@ namespace BillTender.Families.ViewModels
                                     {
                                         if (_memberSelection.Add(selectedUser))
                                         {
-                                            _family.Members.Add(selectedUser);
-                                            if (_family.ACL == null)
-                                                _family.ACL = new ParseACL();
-                                            _family.ACL.SetReadAccess(selectedUser, true);
-                                            _family.ACL.SetWriteAccess(selectedUser, true);
+                                            _family.Readers.Users.Add(selectedUser);
                                             await _family.SaveAsync();
                                         }
                                     }
@@ -95,11 +95,8 @@ namespace BillTender.Families.ViewModels
                             ParseUser selectedUser = _memberSelection.SelectedMember;
                             // TODO
 
-                            _family.Members.Remove(selectedUser);
-                            if (_family.ACL == null)
-                                _family.ACL = new ParseACL();
-                            _family.ACL.SetReadAccess(selectedUser, false);
-                            _family.ACL.SetWriteAccess(selectedUser, false);
+                            _family.Writers.Users.Remove(selectedUser);
+                            _family.Readers.Users.Remove(selectedUser);
                             await _family.SaveAsync();
 
                             _memberSelection.Remove(selectedUser);
