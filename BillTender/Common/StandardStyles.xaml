@@ -534,6 +534,36 @@
             Value="&#xE125;" />
     </Style>
 
+    <Style
+        x:Key="AddMemberAppBarButtonStyle"
+        TargetType="ButtonBase"
+        BasedOn="{StaticResource AppBarButtonStyle}">
+        <Setter
+            Property="AutomationProperties.AutomationId"
+            Value="AddMemberAppBarButton" />
+        <Setter
+            Property="AutomationProperties.Name"
+            Value="Add Member" />
+        <Setter
+            Property="Content"
+            Value="&#xE109;" />
+    </Style>
+
+    <Style
+        x:Key="RemoveMemberAppBarButtonStyle"
+        TargetType="ButtonBase"
+        BasedOn="{StaticResource AppBarButtonStyle}">
+        <Setter
+            Property="AutomationProperties.AutomationId"
+            Value="RemoveMemberAppBarButton" />
+        <Setter
+            Property="AutomationProperties.Name"
+            Value="Remove Member" />
+        <Setter
+            Property="Content"
+            Value="&#xE108;" />
+    </Style>
+
     <!--
     
     <Style x:Key="SkipBackAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">

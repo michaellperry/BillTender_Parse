@@ -13,11 +13,13 @@ namespace BillTender.ViewModels
     {
         private readonly AccountModel _accountModel;
         private readonly FamilySelectionModel _familySelection;
+        private readonly MemberSelectionModel _memberSelection;
 
         public ViewModelLocator()
         {
             _accountModel = new AccountModel();
             _familySelection = new FamilySelectionModel();
+            _memberSelection = new MemberSelectionModel();
         }
 
         public object CurrentUser
@@ -120,7 +122,7 @@ namespace BillTender.ViewModels
                     if (family == null)
                         return null;
 
-                    var viewModel = new MembersViewModel(family);
+                    var viewModel = new MembersViewModel(family, _memberSelection);
                     viewModel.Load();
                     return viewModel;
                 });

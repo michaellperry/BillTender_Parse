@@ -122,7 +122,9 @@
     </Compile>
     <Compile Include="Families\Models\Family.cs" />
     <Compile Include="Families\Models\FamilySelectionModel.cs" />
+    <Compile Include="Families\Models\InvitationModel.cs" />
     <Compile Include="Families\Models\Member.cs" />
+    <Compile Include="Families\Models\MemberSelectionModel.cs" />
     <Compile Include="Families\ViewModels\FamilyEditedEventArgs.cs" />
     <Compile Include="Families\ViewModels\FamilySelectorDesignDataModel.cs" />
     <Compile Include="Families\ViewModels\FamilySelectorViewModel.cs" />
@@ -133,6 +135,9 @@
     <Compile Include="Families\Views\FamilySelectorView.xaml.cs">
       <DependentUpon>FamilySelectorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Families\Views\InvitationDialog.xaml.cs">
+      <DependentUpon>InvitationDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Families\Views\MemberControl.xaml.cs">
       <DependentUpon>MemberControl.xaml</DependentUpon>
     </Compile>
@@ -140,6 +145,7 @@
       <DependentUpon>MembersPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DataContextChangedHelper.cs" />
+    <Compile Include="Helpers\DialogFrame.cs" />
     <Compile Include="Helpers\DialogManager.cs" />
     <Compile Include="ParseConfig.cs" />
     <Compile Include="ParseConfig_Keys.cs" />
@@ -226,6 +232,10 @@
     <Page Include="Common\StandardStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Families\Views\InvitationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Families\Views\MemberControl.xaml">
       <SubType>Designer</SubType>
