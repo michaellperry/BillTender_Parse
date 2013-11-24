@@ -63,7 +63,10 @@ namespace BillTender.Families.ViewModels
                                 Perform(async delegate
                                 {
                                     // TODO
+                                    await family.SaveAsync();
+                                    family.Initialize();
                                     family.Members.Add(_user);
+                                    family.Writers.Users.Add(_user);
                                     await family.SaveAsync();
 
                                     _familySelection.AddFamily(family);
