@@ -59,7 +59,25 @@ namespace BillTender.Families.ViewModels
                             {
                                 Perform(async delegate
                                 {
-                                    // TODO
+                                    var selectedUser = await new ParseQuery<ParseUser>()
+                                        .Where(user => user.Email == invitation.EmailAddress)
+                                        .FirstOrDefaultAsync();
+
+                                    if (selectedUser == null)
+                                        this.LastError = "User not found";
+                                    else
+                                    {
+                                        if (_memberSelection.Add(selectedUser))
+                                        {
+                                            if (invitation.CanManageBillsAndUsers)
+                                                _family.Writers.Users.Add(selectedUser);
+                                            else
+                                                _family.Readers.Users.Add(selectedUser);
+                                            _family.Members.Add(selectedUser);
+                                            await _family.SaveAsync();
+                                        }
+                                    }
+
                                 });
                             });
                     });
