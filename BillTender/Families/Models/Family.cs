@@ -16,11 +16,6 @@ namespace BillTender.Families.Models
             ACL.SetRoleWriteAccess(Writers, true);
         }
 
-        public ParseRelation<ParseUser> Members
-        {
-            get { return GetRelation<ParseUser>("Members"); }
-        }
-
         [ParseFieldName("Readers")]
         public ParseRole Readers
         {

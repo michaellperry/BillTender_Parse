@@ -27,8 +27,10 @@ namespace BillTender.Families.ViewModels
             _memberSelection.Clear();
             Perform(async delegate
             {
-                // TODO
-                var members = await _family.Members.Query.FindAsync();
+                var members =
+                    await _family.Readers.Users.Query
+                    .Or(_family.Writers.Users.Query)
+                    .FindAsync();
 
                 _memberSelection.AddRange(members);
             });
@@ -73,7 +75,6 @@ namespace BillTender.Families.ViewModels
                                                 _family.Writers.Users.Add(selectedUser);
                                             else
                                                 _family.Readers.Users.Add(selectedUser);
-                                            _family.Members.Add(selectedUser);
                                             await _family.SaveAsync();
                                         }
                                     }
@@ -95,7 +96,10 @@ namespace BillTender.Families.ViewModels
                         Perform(async delegate
                         {
                             ParseUser selectedUser = _memberSelection.SelectedMember;
-                            // TODO
+
+                            _family.Readers.Users.Remove(selectedUser);
+                            _family.Writers.Users.Remove(selectedUser);
+                            await _family.SaveAsync();
 
                             _memberSelection.Remove(selectedUser);
                             _memberSelection.SelectedMember = null;
