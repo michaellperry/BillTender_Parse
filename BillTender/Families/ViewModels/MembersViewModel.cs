@@ -72,7 +72,10 @@ namespace BillTender.Families.ViewModels
                                     {
                                         if (_memberSelection.Add(selectedUser))
                                         {
-                                            _family.Readers.Users.Add(selectedUser);
+                                            if (invitation.CanManageBillsAndUsers)
+                                                _family.Writers.Users.Add(selectedUser);
+                                            else
+                                                _family.Readers.Users.Add(selectedUser);
                                             await _family.SaveAsync();
                                         }
                                     }

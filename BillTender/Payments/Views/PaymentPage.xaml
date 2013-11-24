@@ -54,11 +54,11 @@
                 TextWrapping="Wrap"
                 Text="{Binding LastError}"
                 VerticalAlignment="Bottom"
-                Grid.Column="2"
+                Grid.Column="1"
                 Margin="20"
                 FontSize="18.667"
                 Foreground="#FFEA8E8E"
-                TextAlignment="Right" />
+                TextAlignment="Right" Grid.ColumnSpan="2" />
             <ProgressRing
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"

@@ -27,8 +27,6 @@ namespace BillTender.Budget.ViewModels
         {
             Perform(async delegate
             {
-                //var query = new ParseQuery<Bill>()
-                //    .Where(bill => bill.Family == _family);
                 var query =
                     from bill in new ParseQuery<Bill>()
                     where bill.Family == _family
@@ -65,6 +63,8 @@ namespace BillTender.Budget.ViewModels
                             {
                                 Perform(async delegate
                                 {
+                                    // TODO
+                                    bill.ACL = _family.ACL;
                                     await bill.SaveAsync();
 
                                     _bills.Add(bill);

@@ -20,6 +20,12 @@
         <TextBox
             Text="{Binding EmailAddress, Mode=TwoWay}"
             Margin="10,0,10,10" />
+        <CheckBox
+            Content="Can manage bills and users"
+            Margin="10"
+            IsChecked="{Binding CanManageBillsAndUsers, Mode=TwoWay}"
+            FontSize="18.667"
+            Foreground="Black" />
         <StackPanel
             Orientation="Horizontal"
             HorizontalAlignment="Right">
