@@ -27,10 +27,9 @@ namespace BillTender.Families.ViewModels
             _memberSelection.Clear();
             Perform(async delegate
             {
-                var members = await
-                    _family.Readers.Users.Query
-                    .Or(_family.Writers.Users.Query)
-                    .FindAsync();
+                // TODO
+                var members = await _family.Members.Query.FindAsync();
+
                 _memberSelection.AddRange(members);
             });
         }
@@ -61,24 +60,6 @@ namespace BillTender.Families.ViewModels
                                 Perform(async delegate
                                 {
                                     // TODO
-
-                                    var selectedUser = await new ParseQuery<ParseUser>()
-                                        .Where(u => u.Email == invitation.EmailAddress)
-                                        .FirstOrDefaultAsync();
-
-                                    if (selectedUser == null)
-                                        this.LastError = "User not found";
-                                    else
-                                    {
-                                        if (_memberSelection.Add(selectedUser))
-                                        {
-                                            if (invitation.CanManageBillsAndUsers)
-                                                _family.Writers.Users.Add(selectedUser);
-                                            else
-                                                _family.Readers.Users.Add(selectedUser);
-                                            await _family.SaveAsync();
-                                        }
-                                    }
                                 });
                             });
                     });
@@ -97,10 +78,6 @@ namespace BillTender.Families.ViewModels
                         {
                             ParseUser selectedUser = _memberSelection.SelectedMember;
                             // TODO
-
-                            _family.Writers.Users.Remove(selectedUser);
-                            _family.Readers.Users.Remove(selectedUser);
-                            await _family.SaveAsync();
 
                             _memberSelection.Remove(selectedUser);
                             _memberSelection.SelectedMember = null;

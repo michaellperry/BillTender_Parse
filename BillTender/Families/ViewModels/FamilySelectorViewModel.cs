@@ -25,24 +25,12 @@ namespace BillTender.Families.ViewModels
             _familySelection.ClearFamilies();
             Perform(async delegate
             {
-                var roles =
-                    from role in new ParseQuery<ParseRole>()
-                    where role["users"] == _user
-                    select role;
-                var writable =
-                    from writer in roles
-                    join family in new ParseQuery<Family>()
-                        on writer equals family.Writers
+                // TODO
+                var query =
+                    from family in new ParseQuery<Family>()
+                    where family["Members"] == _user
                     select family;
-                var readable =
-                    from reader in roles
-                    join family in new ParseQuery<Family>()
-                        on reader equals family.Readers
-                    select family;
-                var families = await writable.Or(readable)
-                    .Include("Readers")
-                    .Include("Writers")
-                    .FindAsync();
+                var families = await query.FindAsync();
 
                 _familySelection.AddFamilies(families);
             });
@@ -74,9 +62,8 @@ namespace BillTender.Families.ViewModels
                             {
                                 Perform(async delegate
                                 {
-                                    await family.SaveAsync();
-                                    family.Initialize();
-                                    family.Writers.Users.Add(_user);
+                                    // TODO
+                                    family.Members.Add(_user);
                                     await family.SaveAsync();
 
                                     _familySelection.AddFamily(family);
@@ -126,8 +113,8 @@ namespace BillTender.Families.ViewModels
                         {
                             Family selectedFamily = _familySelection.SelectedFamily;
 
-                            selectedFamily.Readers.Users.Remove(_user);
-                            selectedFamily.Writers.Users.Remove(_user);
+                            // TODO
+                            selectedFamily.Members.Remove(_user);
                             await selectedFamily.SaveAsync();
 
                             _familySelection.RemoveFamily(selectedFamily);
