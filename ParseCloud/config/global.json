@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "BillTender": {
+            "applicationId": "sm0Zt5Pe1JtbqpEkihAQjigAI2kHUHgGkbPgCzSb", 
+            "masterKey": "lXKKMPXq4UjHtNZu9Fnb336RCwTMAxtW8gR7HpM0"
+        }, 
+        "_default": {
+            "link": "BillTender"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.13"
+    }
+}
