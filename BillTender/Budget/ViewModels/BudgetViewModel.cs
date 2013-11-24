@@ -63,7 +63,6 @@ namespace BillTender.Budget.ViewModels
                             {
                                 Perform(async delegate
                                 {
-                                    // TODO
                                     bill.ACL = _family.ACL;
                                     await bill.SaveAsync();
 
