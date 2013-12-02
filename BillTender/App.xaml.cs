@@ -1,6 +1,7 @@
 ﻿using System;
 using BillTender.Settings.Views;
 using BillTender.ViewModels;
+using Parse;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.ApplicationSettings;
@@ -47,6 +48,8 @@ namespace BillTender
 
             SettingsPane.GetForCurrentView()
                 .CommandsRequested += App_CommandsRequested;
+
+            SubscribeForPush();
         }
 
         private void OnSuspending(object sender, SuspendingEventArgs e)
@@ -78,6 +81,18 @@ namespace BillTender
             if (locator.CanSetPreferences)
                 args.Request.ApplicationCommands.Add(
                     preferences.SettingsCommand);
+        }
+
+        private async void SubscribeForPush()
+        {
+            try
+            {
+                await ParsePush.SubscribeAsync("");
+            }
+            catch (Exception x)
+            {
+                // TODO: Log this!
+            }
         }
     }
 }

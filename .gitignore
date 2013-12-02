@@ -1,5 +1,7 @@
 ParseConfig_Keys.cs
 packages/
+BillTender/BillTender_StoreKey.pfx
+BillTender/Package.StoreAssociation.xml
 
 #ignore thumbnails created by windows
 Thumbs.db

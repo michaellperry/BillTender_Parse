@@ -1,39 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-
-  <Identity Name="178e51eb-da70-4a6b-be3d-783eb7287767"
-            Publisher="CN=Michael"
-            Version="1.0.0.0" />
-
+  <Identity Name="FacetedWorldsLLC.BillTender" Publisher="CN=5DE6403C-7FE9-4946-AD55-7B2D77C4A18A" Version="1.0.0.0" />
   <Properties>
-    <DisplayName>BillTender</DisplayName>
-    <PublisherDisplayName>Michael</PublisherDisplayName>
+    <DisplayName>Bill Tender</DisplayName>
+    <PublisherDisplayName>Faceted Worlds, LLC</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
-
   <Prerequisites>
     <OSMinVersion>6.2.1</OSMinVersion>
     <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
   </Prerequisites>
-
   <Resources>
-    <Resource Language="x-generate"/>
+    <Resource Language="x-generate" />
   </Resources>
-
   <Applications>
-    <Application Id="App"
-        Executable="$targetnametoken$.exe"
-        EntryPoint="BillTender.App">
-        <VisualElements
-            DisplayName="BillTender"
-            Logo="Assets\Logo.png"
-            SmallLogo="Assets\SmallLogo.png"
-            Description="BillTender"
-            ForegroundText="light"
-            BackgroundColor="#464646">
-            <DefaultTile ShowName="allLogos" />
-            <SplashScreen Image="Assets\SplashScreen.png" />
-        </VisualElements>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="BillTender.App">
+      <VisualElements DisplayName="Bill Tender" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="BillTender" ForegroundText="light" BackgroundColor="#464646" ToastCapable="true">
+        <DefaultTile ShowName="allLogos" />
+        <SplashScreen Image="Assets\SplashScreen.png" />
+      </VisualElements>
     </Application>
   </Applications>
   <Capabilities>
