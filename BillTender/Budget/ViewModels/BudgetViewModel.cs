@@ -66,6 +66,23 @@ namespace BillTender.Budget.ViewModels
                                     bill.ACL = _family.ACL;
                                     await bill.SaveAsync();
 
+                                    var members =
+                                        _family.Readers.Users.Query.Or(
+                                        _family.Writers.Users.Query);
+                                    var installations =
+                                        from member in members
+                                        join installation in
+                                            ParseInstallation.Query
+                                            on member equals installation["user"]
+                                        select installation;
+
+                                    var push = new ParsePush
+                                    {
+                                        Query = installations,
+                                        Alert = "Bill added (from client) for " + bill.Payee
+                                    };
+                                    await push.SendAsync();
+
                                     _bills.Add(bill);
                                 });
                             });
