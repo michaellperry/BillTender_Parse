@@ -26,9 +26,12 @@ namespace BillTender.Settings.Views
                 viewModel.LastError = string.Empty;
                 viewModel.Busy = true;
 
-                await ParseUser.LogInAsync(
+                var user = await ParseUser.LogInAsync(
                     UserNameTextBox.Text,
                     PasswordTextBox.Password);
+
+                ParseInstallation.CurrentInstallation["user"] = user;
+                await ParseInstallation.CurrentInstallation.SaveAsync();
 
                 UserNameTextBox.Text = string.Empty;
                 PasswordTextBox.Password = string.Empty;
