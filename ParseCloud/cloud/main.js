@@ -14,6 +14,26 @@ Parse.Cloud.beforeSave("Bill", function (request, response) {
                 else
                     response.error("You cannot write to the family");
             });
+
+            family.get("Readers").fetch().then(function (readers) {
+                var writersQuery = writers.relation("users").query();
+                var readersQuery = readers.relation("users").query();
+                var usersQuery = Parse.Query.or(
+                    writersQuery, readersQuery);
+
+                var pushQuery = new Parse.Query(Parse.Installation);
+                pushQuery.matchesQuery('user', usersQuery);
+
+                Parse.Push.send({
+                    where: pushQuery,
+                    data: {
+                        alert: "Bill added for " +
+                            request.object.get("Payee")
+                    }
+                });
+            });
+
+
         });
     });
 });
