@@ -2,11 +2,13 @@
 using BillTender.Budget.ViewModels;
 using BillTender.Families.Models;
 using BillTender.Families.ViewModels;
+using BillTender.Messaging;
 using BillTender.Payments.ViewModels;
 using BillTender.Settings.Models;
 using BillTender.Settings.ViewModels;
 using Parse;
 using UpdateControls.XAML;
+using BillTender.Budget.Messages;
 
 namespace BillTender.ViewModels
 {
@@ -16,6 +18,7 @@ namespace BillTender.ViewModels
         private readonly FamilySelectionModel _familySelection;
         private readonly BillSelectionModel _billSelection;
         private readonly MemberSelectionModel _memberSelection;
+        private readonly MessageQueue _messageQueue;
 
         public ViewModelLocator()
         {
@@ -23,6 +26,10 @@ namespace BillTender.ViewModels
             _familySelection = new FamilySelectionModel();
             _billSelection = new BillSelectionModel();
             _memberSelection = new MemberSelectionModel();
+            _messageQueue = new MessageQueue();
+
+            _messageQueue
+                .Register(new CreateBillHandler());
         }
 
         public object CurrentUser
@@ -93,7 +100,8 @@ namespace BillTender.ViewModels
 
                     BudgetViewModel viewModel = new BudgetViewModel(
                         _familySelection.SelectedFamily,
-                        _billSelection);
+                        _billSelection,
+                        _messageQueue);
                     viewModel.Load();
                     return viewModel;
                 });

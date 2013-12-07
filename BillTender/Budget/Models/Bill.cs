@@ -79,7 +79,7 @@ namespace BillTender.Budget.Models
 
         public override int GetHashCode()
         {
-            return ObjectId.GetHashCode();
+            return ObjectId == null ? 0 : ObjectId.GetHashCode();
         }
 
         public static Bill FromMemento(BillMemento memento)

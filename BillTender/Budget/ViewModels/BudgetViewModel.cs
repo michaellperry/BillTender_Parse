@@ -14,6 +14,8 @@ using UpdateControls.XAML;
 using Windows.Storage;
 using System.Xml.Serialization;
 using BillTender.Budget.Mementos;
+using BillTender.Budget.Messages;
+using BillTender.Messaging;
 
 namespace BillTender.Budget.ViewModels
 {
@@ -21,19 +23,24 @@ namespace BillTender.Budget.ViewModels
     {
         private readonly BillTender.Families.Models.Family _family;
         private readonly BillSelectionModel _billSelection;
+        private readonly MessageQueue _messageQueue;
         
         public BudgetViewModel(
             BillTender.Families.Models.Family family,
-            BillSelectionModel billSelection)
+            BillSelectionModel billSelection,
+            MessageQueue messageQueue)
         {
             _family = family;
             _billSelection = billSelection;
+            _messageQueue = messageQueue;
         }
 
         public void Load()
         {
             Perform(async delegate
             {
+                await _messageQueue.InitializeAsync();
+
                 var billsCached = await LoadBillsAsync(_family.ObjectId);
                 _billSelection.SetBills(billsCached);
 
@@ -72,18 +79,15 @@ namespace BillTender.Budget.ViewModels
                             {
                                 Perform(async delegate
                                 {
-                                    bill.ACL = _family.ACL;
-                                    await bill.SaveAsync();
-
-                                    var members =
-                                        _family.Readers.Users.Query.Or(
-                                        _family.Writers.Users.Query);
-                                    var installations =
-                                        from member in members
-                                        join installation in
-                                            ParseInstallation.Query
-                                            on member equals installation["user"]
-                                        select installation;
+                                    var message = new CreateBill
+                                    {
+                                        FamilyId = _family.ObjectId,
+                                        Payee = bill.Payee,
+                                        Amount = bill.Amount,
+                                        Frequency = bill.Frequency,
+                                        NextDue = bill.NextDue
+                                    };
+                                    await _messageQueue.PushAsync(message);
 
                                     _billSelection.AddBill(bill);
                                 });
@@ -120,7 +124,7 @@ namespace BillTender.Budget.ViewModels
 
         private static XmlSerializer BillSerializer =
             new XmlSerializer(typeof(BillListMemento));
-
+        
         private static async Task<List<Bill>> LoadBillsAsync(
             string familyId)
         {
