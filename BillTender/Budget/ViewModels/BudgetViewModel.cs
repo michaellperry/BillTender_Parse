@@ -79,15 +79,8 @@ namespace BillTender.Budget.ViewModels
                             {
                                 Perform(async delegate
                                 {
-                                    var message = new CreateBill
-                                    {
-                                        FamilyId = _family.ObjectId,
-                                        Payee = bill.Payee,
-                                        Amount = bill.Amount,
-                                        Frequency = bill.Frequency,
-                                        NextDue = bill.NextDue
-                                    };
-                                    await _messageQueue.PushAsync(message);
+                                    bill.ACL = _family.ACL;
+                                    await bill.SaveAsync();
 
                                     _billSelection.AddBill(bill);
                                 });
