@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UpdateControls;
 using UpdateControls.Collections;
 using UpdateControls.Fields;
 
@@ -14,9 +15,19 @@ namespace BillTender.Budget.Models
 
         public void SetBills(IEnumerable<Bill> bills)
         {
+            var bin = new RecycleBin<Bill>(_bills);
+
             _bills.Clear();
             foreach (var bill in bills)
+            {
+                var recycled = bin.Extract(bill);
+                recycled.Payee = bill.Payee;
+                recycled.Amount = bill.Amount;
+                recycled.Frequency = bill.Frequency;
+                recycled.NextDue = bill.NextDue;
+
                 _bills.Add(bill);
+            }
         }
 
         public IEnumerable<Bill> Bills

@@ -30,25 +30,16 @@ namespace BillTender.Families.ViewModels
         {
             Perform(async delegate
             {
-                var roles =
-                    from role in new ParseQuery<ParseRole>()
-                    where role["users"] == _user
-                    select role;
-                var writable =
-                    from writer in roles
-                    join family in new ParseQuery<Family>()
-                        on writer equals family.Writers
-                    select family;
-                var readable =
-                    from reader in roles
-                    join family in new ParseQuery<Family>()
-                        on reader equals family.Readers
-                    select family;
-                var families = await writable.Or(readable)
-                    .Include("Readers")
-                    .Include("Writers")
-                    .FindAsync();
+                var familiesCached = await LoadFamiliesAsync(
+                    _user.ObjectId);
+                _familySelection.SetFamilies(familiesCached);
+
+                var families = await QueryFamiliesAsync(_user);
                 _familySelection.SetFamilies(families);
+
+                await SaveFamiliesAsync(
+                    _user.ObjectId,
+                    families);
             });
         }
 

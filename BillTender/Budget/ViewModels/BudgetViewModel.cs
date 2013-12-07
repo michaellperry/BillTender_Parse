@@ -34,13 +34,15 @@ namespace BillTender.Budget.ViewModels
         {
             Perform(async delegate
             {
-                var query =
-                    from bill in new ParseQuery<Bill>()
-                    where bill.Family == _family
-                    select bill;
-                var results = await query.FindAsync();
+                var billsCached = await LoadBillsAsync(_family.ObjectId);
+                _billSelection.SetBills(billsCached);
 
+                var results = await QueryBillsAsync(_family);
                 _billSelection.SetBills(results);
+
+                await SaveBillsAsync(
+                    _family.ObjectId,
+                    results);
             });
         }
 

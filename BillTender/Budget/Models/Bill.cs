@@ -89,6 +89,7 @@ namespace BillTender.Budget.Models
             bill.Payee = memento.Payee;
             bill.Frequency = memento.Frequency;
             bill.Amount = memento.Amount;
+            bill.NextDue = memento.NextDue;
             return bill;
         }
 
@@ -99,7 +100,8 @@ namespace BillTender.Budget.Models
                 ObjectId = ObjectId,
                 Payee = Payee,
                 Frequency = Frequency,
-                Amount = Amount
+                Amount = Amount,
+                NextDue = NextDue
             };
         }
     }
