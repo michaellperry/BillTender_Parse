@@ -146,7 +146,7 @@ namespace BillTender.Families.ViewModels
         private static XmlSerializer FamilySerializer =
             new XmlSerializer(typeof(FamilyListMemento));
 
-        private static async Task<List<Family>> LoadFamilies(
+        private static async Task<List<Family>> LoadFamiliesAsync(
             string userId)
         {
             try
@@ -170,7 +170,7 @@ namespace BillTender.Families.ViewModels
             }
         }
 
-        private static async Task SaveFamilies(
+        private static async Task SaveFamiliesAsync(
             string userId,
             List<Family> families)
         {
@@ -194,7 +194,7 @@ namespace BillTender.Families.ViewModels
             }
         }
 
-        private async static Task<List<Family>> QueryFamilies(
+        private async static Task<List<Family>> QueryFamiliesAsync(
             ParseUser user)
         {
             var roles =

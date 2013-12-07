@@ -119,7 +119,8 @@ namespace BillTender.Budget.ViewModels
         private static XmlSerializer BillSerializer =
             new XmlSerializer(typeof(BillListMemento));
 
-        private static async Task<List<Bill>> LoadBills(string familyId)
+        private static async Task<List<Bill>> LoadBillsAsync(
+            string familyId)
         {
             try
             {
@@ -142,7 +143,7 @@ namespace BillTender.Budget.ViewModels
             }
         }
 
-        private static async Task SaveBills(
+        private static async Task SaveBillsAsync(
             string familyId,
             List<Bill> bills)
         {
@@ -166,7 +167,7 @@ namespace BillTender.Budget.ViewModels
             }
         }
 
-        private static async Task<List<Bill>> QueryBills(
+        private static async Task<List<Bill>> QueryBillsAsync(
             BillTender.Families.Models.Family family)
         {
             var query =
