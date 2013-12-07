@@ -108,7 +108,10 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Behaviors\BindVisualStateBehavior.cs" />
+    <Compile Include="Budget\Mementos\BillListMemento.cs" />
+    <Compile Include="Budget\Mementos\BillMemento.cs" />
     <Compile Include="Budget\Models\Bill.cs" />
+    <Compile Include="Budget\Models\BillSelectionModel.cs" />
     <Compile Include="Budget\Models\Frequency.cs" />
     <Compile Include="Budget\ViewModels\BudgetViewModel.cs" />
     <Compile Include="Budget\ViewModels\BillEditedEventArgs.cs" />
@@ -121,6 +124,8 @@
     <Compile Include="Budget\Views\BudgetPage.xaml.cs">
       <DependentUpon>BudgetPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Families\Mementos\FamilyListMemento.cs" />
+    <Compile Include="Families\Mementos\FamilyMemento.cs" />
     <Compile Include="Families\Models\Family.cs" />
     <Compile Include="Families\Models\FamilySelectionModel.cs" />
     <Compile Include="Families\Models\InvitationModel.cs" />

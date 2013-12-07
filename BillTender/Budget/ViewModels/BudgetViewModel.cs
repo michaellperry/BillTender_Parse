@@ -1,5 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using BillTender.Budget.Models;
 using BillTender.Helpers;
@@ -8,19 +11,23 @@ using Parse;
 using UpdateControls.Collections;
 using UpdateControls.Fields;
 using UpdateControls.XAML;
+using Windows.Storage;
+using System.Xml.Serialization;
+using BillTender.Budget.Mementos;
 
 namespace BillTender.Budget.ViewModels
 {
     public class BudgetViewModel : ProgressViewModel
     {
         private readonly BillTender.Families.Models.Family _family;
-
-        private IndependentList<Bill> _bills = new IndependentList<Bill>();
-        private Independent<Bill> _selectedBill = new Independent<Bill>();
-
-        public BudgetViewModel(BillTender.Families.Models.Family family)
+        private readonly BillSelectionModel _billSelection;
+        
+        public BudgetViewModel(
+            BillTender.Families.Models.Family family,
+            BillSelectionModel billSelection)
         {
             _family = family;
+            _billSelection = billSelection;
         }
 
         public void Load()
@@ -32,20 +39,20 @@ namespace BillTender.Budget.ViewModels
                     where bill.Family == _family
                     select bill;
                 var results = await query.FindAsync();
-                foreach (var bill in results)
-                    _bills.Add(bill);
+
+                _billSelection.SetBills(results);
             });
         }
 
         public IEnumerable<Bill> Bills
         {
-            get { return _bills; }
+            get { return _billSelection.Bills; }
         }
 
         public Bill SelectedBill
         {
-            get { return _selectedBill.Value; }
-            set { _selectedBill.Value = value; }
+            get { return _billSelection.SelectedBill; }
+            set { _billSelection.SelectedBill = value; }
         }
 
         public ICommand NewBill
@@ -76,14 +83,7 @@ namespace BillTender.Budget.ViewModels
                                             on member equals installation["user"]
                                         select installation;
 
-                                    var push = new ParsePush
-                                    {
-                                        Query = installations,
-                                        Alert = "Bill added (from client) for " + bill.Payee
-                                    };
-                                    await push.SendAsync();
-
-                                    _bills.Add(bill);
+                                    _billSelection.AddBill(bill);
                                 });
                             });
                     });
@@ -95,10 +95,10 @@ namespace BillTender.Budget.ViewModels
             get
             {
                 return MakeCommand
-                    .When(() => _selectedBill.Value != null)
+                    .When(() => _billSelection.SelectedBill != null)
                     .Do(delegate
                     {
-                        var bill = _selectedBill.Value;
+                        var bill = _billSelection.SelectedBill;
                         DialogManager.ShowBillDialog(
                             bill,
                             completed: delegate
@@ -114,6 +114,67 @@ namespace BillTender.Budget.ViewModels
                             });
                     });
             }
+        }
+
+        private static XmlSerializer BillSerializer =
+            new XmlSerializer(typeof(BillListMemento));
+
+        private static async Task<List<Bill>> LoadBills(string familyId)
+        {
+            try
+            {
+                string fileName = familyId + ".xml";
+                var folder = await ApplicationData.Current.LocalFolder
+                    .GetFolderAsync("Bills");
+                var file = await folder.GetFileAsync(fileName);
+                using (var stream = await file.OpenStreamForReadAsync())
+                {
+                    var billList = (BillListMemento)BillSerializer
+                        .Deserialize(stream);
+                    return billList.Bills
+                        .Select(memento => Bill.FromMemento(memento))
+                        .ToList();
+                }
+            }
+            catch (Exception x)
+            {
+                return new List<Bill>();
+            }
+        }
+
+        private static async Task SaveBills(
+            string familyId,
+            List<Bill> bills)
+        {
+            string fileName = familyId + ".xml";
+            var folder = await ApplicationData.Current.LocalFolder
+                .CreateFolderAsync(
+                    "Bills",
+                    CreationCollisionOption.OpenIfExists);
+            var file = await folder.CreateFileAsync(
+                fileName,
+                CreationCollisionOption.ReplaceExisting);
+            using (var stream = await file.OpenStreamForWriteAsync())
+            {
+                var memento = new BillListMemento
+                {
+                    Bills = bills
+                        .Select(bill => bill.ToMemento())
+                        .ToList()
+                };
+                BillSerializer.Serialize(stream, memento);
+            }
+        }
+
+        private static async Task<List<Bill>> QueryBills(
+            BillTender.Families.Models.Family family)
+        {
+            var query =
+                from bill in new ParseQuery<Bill>()
+                where bill.Family == family
+                select bill;
+            var results = await query.FindAsync();
+            return results.ToList();
         }
     }
 }

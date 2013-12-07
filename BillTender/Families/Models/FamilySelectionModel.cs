@@ -23,16 +23,12 @@ namespace BillTender.Families.Models
             set { _selectedFamily.Value = value; }
         }
 
-        public void AddFamilies(IEnumerable<Family> families)
+        public void SetFamilies(IEnumerable<Family> families)
         {
+            _families.Clear();
             foreach (var family in families)
                 _families.Add(family);
             SelectedFamily = families.FirstOrDefault();
-        }
-
-        public void ClearFamilies()
-        {
-            _families.Clear();
         }
 
         public void AddFamily(Family family)

@@ -1,4 +1,6 @@
 ﻿using Parse;
+using System;
+using BillTender.Families.Mementos;
 
 namespace BillTender.Families.Models
 {
@@ -35,6 +37,38 @@ namespace BillTender.Families.Models
         {
             get { return GetProperty<string>(); }
             set { SetProperty<string>(value); }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == this)
+                return true;
+            Family that = obj as Family;
+            if (that == null)
+                return false;
+            return Object.Equals(this.ObjectId, that.ObjectId);
+        }
+
+        public override int GetHashCode()
+        {
+            return ObjectId.GetHashCode();
+        }
+
+        public static Family FromMemento(FamilyMemento memento)
+        {
+            var family = ParseObject.Create<Family>();
+            family.ObjectId = memento.ObjectId;
+            family.Name = memento.Name;
+            return family;
+        }
+
+        public FamilyMemento ToMemento()
+        {
+            return new FamilyMemento
+            {
+                ObjectId = ObjectId,
+                Name = Name
+            };
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using BillTender.Budget.ViewModels;
+﻿using BillTender.Budget.Models;
+using BillTender.Budget.ViewModels;
 using BillTender.Families.Models;
 using BillTender.Families.ViewModels;
 using BillTender.Payments.ViewModels;
@@ -13,12 +14,14 @@ namespace BillTender.ViewModels
     {
         private readonly AccountModel _accountModel;
         private readonly FamilySelectionModel _familySelection;
+        private readonly BillSelectionModel _billSelection;
         private readonly MemberSelectionModel _memberSelection;
 
         public ViewModelLocator()
         {
             _accountModel = new AccountModel();
             _familySelection = new FamilySelectionModel();
+            _billSelection = new BillSelectionModel();
             _memberSelection = new MemberSelectionModel();
         }
 
@@ -88,7 +91,9 @@ namespace BillTender.ViewModels
                     if (_familySelection.SelectedFamily == null)
                         return null;
 
-                    BudgetViewModel viewModel = new BudgetViewModel(_familySelection.SelectedFamily);
+                    BudgetViewModel viewModel = new BudgetViewModel(
+                        _familySelection.SelectedFamily,
+                        _billSelection);
                     viewModel.Load();
                     return viewModel;
                 });

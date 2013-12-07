@@ -4,6 +4,7 @@ using Parse;
 using BillTender.Payments.Models;
 using System.Collections.Generic;
 using BillTender.Families.Models;
+using BillTender.Budget.Mementos;
 
 namespace BillTender.Budget.Models
 {
@@ -79,6 +80,27 @@ namespace BillTender.Budget.Models
         public override int GetHashCode()
         {
             return ObjectId.GetHashCode();
+        }
+
+        public static Bill FromMemento(BillMemento memento)
+        {
+            var bill = ParseObject.Create<Bill>();
+            bill.ObjectId = memento.ObjectId;
+            bill.Payee = memento.Payee;
+            bill.Frequency = memento.Frequency;
+            bill.Amount = memento.Amount;
+            return bill;
+        }
+
+        public BillMemento ToMemento()
+        {
+            return new BillMemento
+            {
+                ObjectId = ObjectId,
+                Payee = Payee,
+                Frequency = Frequency,
+                Amount = Amount
+            };
         }
     }
 }
