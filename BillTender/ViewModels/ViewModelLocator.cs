@@ -29,7 +29,8 @@ namespace BillTender.ViewModels
             _messageQueue = new MessageQueue();
 
             _messageQueue
-                .Register(new CreateBillHandler());
+                .Register(new CreateBillHandler())
+                .Register(new UpdateBillHandler());
         }
 
         public object CurrentUser

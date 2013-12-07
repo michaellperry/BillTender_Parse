@@ -112,6 +112,8 @@
     <Compile Include="Budget\Mementos\BillMemento.cs" />
     <Compile Include="Budget\Messages\CreateBill.cs" />
     <Compile Include="Budget\Messages\CreateBillHandler.cs" />
+    <Compile Include="Budget\Messages\UpdateBill.cs" />
+    <Compile Include="Budget\Messages\UpdateBillHandler.cs" />
     <Compile Include="Budget\Models\Bill.cs" />
     <Compile Include="Budget\Models\BillSelectionModel.cs" />
     <Compile Include="Budget\Models\Frequency.cs" />
