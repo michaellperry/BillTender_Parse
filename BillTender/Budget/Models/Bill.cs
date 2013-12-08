@@ -93,6 +93,7 @@ namespace BillTender.Budget.Models
         {
             var bill = ParseObject.Create<Bill>();
             bill.ObjectId = memento.ObjectId;
+            bill.UniqueId = memento.UniqueId;
             bill.Payee = memento.Payee;
             bill.Frequency = memento.Frequency;
             bill.Amount = memento.Amount;
@@ -105,6 +106,7 @@ namespace BillTender.Budget.Models
             return new BillMemento
             {
                 ObjectId = ObjectId,
+                UniqueId = UniqueId,
                 Payee = Payee,
                 Frequency = Frequency,
                 Amount = Amount,
