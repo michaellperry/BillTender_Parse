@@ -15,6 +15,7 @@ namespace BillTender.Budget.Messages
                 message.FamilyId);
             await family.FetchAsync();
             bill.Family = family;
+            bill.UniqueId = message.BillId;
             bill.Payee = message.Payee;
             bill.Amount = message.Amount;
             bill.Frequency = message.Frequency;

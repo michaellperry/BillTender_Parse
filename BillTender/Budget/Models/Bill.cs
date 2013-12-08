@@ -11,6 +11,13 @@ namespace BillTender.Budget.Models
     [ParseClassName("Bill")]
     public class Bill : ParseObject
     {
+        [ParseFieldName("UniqueId")]
+        public string UniqueId
+        {
+            get { return GetProperty<string>(); }
+            set { SetProperty<string>(value); }
+        }
+
         [ParseFieldName("Family")]
         public Family Family
         {

@@ -79,11 +79,13 @@ namespace BillTender.Budget.ViewModels
                             {
                                 Perform(async delegate
                                 {
+                                    bill.UniqueId = Guid.NewGuid().ToString();
                                     _billSelection.AddBill(bill);
 
                                     CreateBill message = new CreateBill
                                     {
                                         FamilyId = _family.ObjectId,
+                                        BillId = bill.UniqueId,
                                         Payee = bill.Payee,
                                         Amount = bill.Amount,
                                         Frequency = bill.Frequency,
@@ -112,7 +114,15 @@ namespace BillTender.Budget.ViewModels
                             {
                                 Perform(async delegate
                                 {
-                                    await bill.SaveAsync();
+                                    var message = new UpdateBill
+                                    {
+                                        BillId = bill.UniqueId,
+                                        Payee = bill.Payee,
+                                        Amount = bill.Amount,
+                                        Frequency = bill.Frequency,
+                                        NextDue = bill.NextDue
+                                    };
+                                    await _messageQueue.PushAsync(message);
                                 });
                             },
                             cancelled: delegate

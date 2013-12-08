@@ -7,6 +7,7 @@ namespace BillTender.Budget.Messages
     public class CreateBill : Message
     {
         public string FamilyId { get; set; }
+        public string BillId { get; set; }
         public string Payee { get; set; }
         public double Amount { get; set; }
         public Frequency Frequency { get; set; }
