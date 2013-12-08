@@ -26,7 +26,7 @@ namespace BillTender.Budget.Models
                 recycled.Frequency = bill.Frequency;
                 recycled.NextDue = bill.NextDue;
 
-                _bills.Add(bill);
+                _bills.Add(recycled);
             }
         }
 
